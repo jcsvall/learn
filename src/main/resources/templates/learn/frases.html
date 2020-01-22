@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{layouts/default}">
+<head>
+<title>Learn principal page</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-sm" id="contenido">
+
+			<div id="accordion" th:fragment="accordionFragment">
+				<br />
+				<div class="progress">
+					<div th:class="${cssBarra}" role="progressbar"
+						th:aria-valuenow="${porcentajeValue}" aria-valuemin="0"
+						aria-valuemax="100"><span th:text="${porcentajeValue}+'%'"></span></div>
+				</div>
+				<div class="card" th:each="f,iter : ${frasesListLazyInit}"
+					style="display: none">
+					<div th:each="t,iter : ${f.traduccionesList}">
+						<p th:text="${t.traduccion}" style="margin: 0"></p>
+					</div>
+				</div>
+				<div class="card text-center" th:each="f,iter : ${frasesList}">
+					<div class="card-header">
+						<span th:text="${f.frase}"
+							style="font-weight: bold; font-size: 30px;"></span>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">
+							<span id="pronunciacionT" style="font-size: 15px; display: none"
+								th:text="${f.pronunciacion} != null ? ' ('+${f.pronunciacion}+')' : ''"></span>
+						</h5>
+						<div class="card-text">
+							<div id="traduccionesList" style="display: none">
+								<div th:each="t,iter : ${f.traduccionesList}">
+									<p th:text="${t.traduccion}" style="margin: 0"></p>
+								</div>
+							</div>
+							<div id="contenedorBtnMostrarTraduccion">
+								<button type="button"
+									th:onclick="'frasesJs.mostrarTraduccion()'"
+									class="btn btn-primary">Mostrar traducci&oacute;n</button>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="card-footer text-muted">
+						<div id="contenedorBtns" style="display: none">
+							<label>Lo sabi&aacute;s</label>
+							<button type="button"
+								th:onclick="'frasesJs.guardar('+${f.id}+')'"
+								class="btn btn-primary">Si</button>
+							<button type="button"
+								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
+								class="btn btn-dark">No</button>
+						</div>
+					</div>
+				</div>
+				<div class="alert alert-success" role="alert" th:if="${finalizado}">
+					<h4 class="alert-heading">Well done!</h4>
+					<p>Pr&aacute;ctica completada!</p>
+					<hr>
+					<a class="btn btn-primary" th:href="@{/learn/frases}" role="button">Continuar practicando</a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- js para eventos -->
+	<div layout:fragment="my_js">
+		<script th:src="@{/js/frases/frases.js}"></script>
+	</div>
+
+</body>
+</html>

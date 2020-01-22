@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{layouts/default}">
+<head>
+<title>Learn principal page</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container" id="contenido">
+		<div th:fragment="formFragment">
+			<form>
+				<div class="form-group">
+					<label for="fraseId" class="text-primary">Frase</label> <input type="text"
+						class="form-control" id="fraseId">
+				</div>
+				<div class="form-group">
+					<label for="proId" class="text-primary">Pronunciaci&oacute;n</label> <input type="text"
+						class="form-control" id="proId">
+				</div>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" id="traId">
+					<div class="input-group-append">
+						<button type="button" class="btn btn-success" onclick="addJs.agregar()">Agregar
+					traducci&oacute;n</button>
+					</div>
+				</div>
+				<span class="text-secondary">Traducciones:</span>
+				<ul id="traducciones">					
+				</ul>
+				
+				<button type="button" class="btn btn-primary" onclick="addJs.guardar()">Guardar</button>
+			</form>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- js para eventos -->
+	<div layout:fragment="my_js">
+		<script th:src="@{/js/frases/add.js}"></script>
+	</div>
+
+</body>
+</html>

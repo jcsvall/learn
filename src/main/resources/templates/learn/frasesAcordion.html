@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{layouts/default}">
+<head>
+<title>Learn principal page</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-sm" id="contenido">
+			<br />
+
+			<div id="accordion" th:fragment="accordionFragment">
+				<div class="progress">
+					<div th:class="${cssBarra}" role="progressbar"
+						th:aria-valuenow="${porcentajeValue}" aria-valuemin="0"
+						aria-valuemax="100"></div>
+				</div>
+				<div class="card" th:each="f,iter : ${frasesListLazyInit}" style="display:none">
+					<div th:each="t,iter : ${f.traduccionesList}">
+						<p th:text="${t.traduccion}" style="margin: 0"></p>
+					</div>
+				</div>
+				<div class="card" th:each="f,iter : ${frasesList}">
+					<div class="card-header text-center" th:id="${'heading'+f.id}" th:style="'display:'+${iter.index}==0?'block':'none'">
+						<h5 class="mb-0">
+							<button class="btn btn-link collapsed" data-toggle="collapse"
+								th:data-target="${'#collapse'+f.id}" aria-expanded="false"
+								th:aria-controls="${'collapse'+f.id}">
+								<span th:text="'&quot;'+${f.frase+'&quot;'}"
+									style="font-size: 20px"></span>
+									<span th:text="${iter.index}"
+									style="font-size: 20px"></span>
+							</button>
+						</h5>
+					</div>
+
+					<div th:id="${'collapse'+f.id}" class="collapse"
+						th:aria-labelledby="${'heading'+f.id}" data-parent="#accordion">
+						<div class="card-body">
+
+							<div class="card text-center">
+								<div class="card-header">
+									<span th:text="${f.frase}"
+										style="font-weight: bold; font-size: 30px;"></span>
+								</div>
+								<div class="card-body">
+									<h5 class="card-title">
+										<span style="font-size: 15px;"
+											th:text="${f.pronunciacion} != null ? ' ('+${f.pronunciacion}+')' : ''"></span>
+									</h5>
+									<div class="card-text">
+										<div th:each="t,iter : ${f.traduccionesList}">
+											<p th:text="${t.traduccion}" style="margin: 0"></p>
+										</div>
+									</div>
+								</div>
+								<div class="card-footer text-muted">
+									<!-- 									<form th:object="${f}" th:id="${'contenedorForm'+f.id}"> -->
+									<!-- 								<input th:field="*{id}" type="text">  -->
+									<label>Lo sabi&aacute;s</label>
+									<button type="button"
+										th:onclick="'frasesJs.guardar('+${f.id}+')'"
+										class="btn btn-primary">Si</button>
+									<button type="button"
+										th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
+										class="btn btn-dark">No</button>
+									<!-- 									</form> -->
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- js para eventos -->
+	<div layout:fragment="my_js">
+		<script th:src="@{/js/frases/frases.js}"></script>
+	</div>
+
+</body>
+</html>
