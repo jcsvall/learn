@@ -72,6 +72,7 @@ public class LearnController {
 		if(frase != null) {
 			frasesList.remove(frase);
 			frase.setFechaUpdate(new Date());
+			frase.setEstado("REVISADO");
 			frasesService.save(frase);			
 		}
 		calculoBarraProgress(model, frasesList);

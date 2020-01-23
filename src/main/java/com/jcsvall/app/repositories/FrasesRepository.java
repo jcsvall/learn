@@ -14,9 +14,12 @@ import com.jcsvall.app.entities.Usuarios;
 public interface FrasesRepository extends JpaRepository<Frases, Serializable>{
 	public List<Frases> findByIdUsuarios(Usuarios usuarios);
 	
-	@Query("SELECT f FROM Frases f WHERE f.idUsuarios.id = :id order by f.fechaUpdate asc")
+	@Query("SELECT f FROM Frases f WHERE f.idUsuarios.id = :id and f.estado <> 'NUEVO' order by f.fechaUpdate asc")
 	public List<Frases> findFirsTendByIdUsuarioAndFechaUpdate(Integer id);
 	
 	public Frases findById(Integer id);
+	
+	@Query("SELECT f FROM Frases f WHERE f.idUsuarios.id = :id AND f.estado=:estado order by f.id")
+	public List<Frases> finDByIdUsuarioAndEstado(Integer id,String estado);
 	
 }

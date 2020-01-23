@@ -15,4 +15,6 @@ public interface FrasesService {
 	public abstract Frases save(FraseDto frase);
 	
 	public abstract Frases findById(Integer id);
+	
+	public abstract List<Frases> finDByIdUsuarioAndEstado(Integer id,String estado);
 }

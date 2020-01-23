@@ -36,13 +36,24 @@ public class FrasesSeviceImpl implements FrasesService {
 	@Override
 	public List<Frases> findFirsTendByIdUsuarioAndFechaUpdate(Integer id) {
 		List<Frases> frases = new ArrayList<>();
-		List<Frases> frasesList = frasesRepository.findFirsTendByIdUsuarioAndFechaUpdate(id);
+		
+		List<Frases> frasesNuevas=finDByIdUsuarioAndEstado(id,"NUEVO");
 		int cont = 0;
-		for (Frases frase : frasesList) {
+		for (Frases frase : frasesNuevas) {			
+			if (cont == 20) {
+				break;
+			}
 			frases.add(frase);
 			cont++;
-			if (cont > 21) {
-				break;
+		}
+		if (cont < 20) {
+			List<Frases> frasesList = frasesRepository.findFirsTendByIdUsuarioAndFechaUpdate(id);
+			for (Frases frase : frasesList) {
+				if (cont == 20) {
+					break;
+				}
+				frases.add(frase);
+				cont++;
 			}
 		}
 		return frases;
@@ -51,7 +62,7 @@ public class FrasesSeviceImpl implements FrasesService {
 	@Override
 	public Frases save(FraseDto frase) {
 		Frases f = new Frases();
-		f.setEstado("PENDIENTE");
+		f.setEstado("NUEVO");
 		f.setFechaIngreso(new Date());
 		f.setFechaUpdate(new Date());
 		f.setFrase(frase.getFrase());
@@ -72,6 +83,11 @@ public class FrasesSeviceImpl implements FrasesService {
 	@Override
 	public Frases findById(Integer id) {
 		return frasesRepository.findById(id);
+	}
+
+	@Override
+	public List<Frases> finDByIdUsuarioAndEstado(Integer id, String estado) {
+		return frasesRepository.finDByIdUsuarioAndEstado(id, estado);
 	}
 
 }
