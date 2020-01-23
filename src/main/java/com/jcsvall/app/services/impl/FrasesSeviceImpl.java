@@ -41,7 +41,7 @@ public class FrasesSeviceImpl implements FrasesService {
 		for (Frases frase : frasesList) {
 			frases.add(frase);
 			cont++;
-			if (cont > 7) {
+			if (cont > 21) {
 				break;
 			}
 		}

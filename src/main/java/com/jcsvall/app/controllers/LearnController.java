@@ -43,14 +43,16 @@ public class LearnController {
 	@RequestMapping("/frases")
 	public String frases(ModelMap model) {
 		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
-		
+
 		List<Frases> fraseOne = new ArrayList<>();
-		Frases firs = frasesList.get(0);
-		fraseOne.add(firs);
+		if (!frasesList.isEmpty()) {
+			Frases firs = frasesList.get(0);
+			fraseOne.add(firs);
+		}
 		model.put("frasesList", fraseOne);
 		model.put("frasesListLazyInit", frasesList);
 		model.addAttribute("cssBarra", "progress-bar w-0");
-		model.addAttribute("porcentajeValue","0");
+		model.addAttribute("porcentajeValue", "0");
 		totalElementosIniciales = frasesList.size();
 		return "learn/frases";
 	}
@@ -115,16 +117,16 @@ public class LearnController {
 		String valor="0";
 		//int cuarto = (int) Math.ceil(totalElementosIniciales/4);
 		int quitados=totalElementosIniciales-frasesList.size();
-		if(quitados>=2) {
+		if(quitados>=5) {
 			valor="25";
 		}
-		if(quitados>=4) {
+		if(quitados>=10) {
 			valor="50";
 		}
-		if(quitados>=6) {
+		if(quitados>=15) {
 			valor="75";
 		}
-		if(quitados>=8) {
+		if(quitados==20) {
 			valor="100";
 		}
 		model.addAttribute("cssBarra", "progress-bar w-"+valor);
