@@ -69,6 +69,7 @@ public class FrasesSeviceImpl implements FrasesService {
 		f.setPronunciacion(frase.getPronunciacion());
 		f.setIdCategorias(new Categorias(1));
 		f.setIdUsuarios(new Usuarios(1));
+		f = frasesRepository.save(f);
 		List<Traducciones> tradList = new ArrayList<>();
 		for(TraduccionDto tr:frase.getTraduccionesList()) {
 			Traducciones t = new Traducciones();
