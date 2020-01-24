@@ -13,8 +13,7 @@ var frasesJs = (function(){
 			$("#contenedorBtns").hide();
 			$("#loading").show();
 			$("#contenido").load(urlBase + "/ajax/guardar/no/"+idForm,
-				function (response) {
-				$("#contenedorBtns").show();
+				function (response) {				
 				$("#loading").hide();
 				console.log(response);
 			});			
@@ -23,8 +22,7 @@ var frasesJs = (function(){
 			$("#contenedorBtns").hide();
 		    $("#loading").show();
 			$("#contenido").load(urlBase + "/ajax/guardar/"+idForm,
-					function (response) {	
-				    $("#contenedorBtns").show();
+					function (response) {
 			        $("#loading").hide();
 					console.log(response);
 				});
