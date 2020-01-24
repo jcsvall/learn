@@ -13,7 +13,9 @@
 				<div class="progress" style="height: 40px;">
 					<div th:class="${cssBarra}" role="progressbar"
 						th:aria-valuenow="${porcentajeValue}" aria-valuemin="0"
-						aria-valuemax="100"><span th:text="${porcentajeValue}+'%'"></span></div>
+						aria-valuemax="100">
+						<span th:text="${porcentajeValue}+'%'"></span>
+					</div>
 				</div>
 				<div class="card" th:each="f,iter : ${frasesListLazyInit}"
 					style="display: none">
@@ -24,23 +26,24 @@
 				<div class="card text-center" th:each="f,iter : ${frasesList}">
 					<div class="card-header">
 						<span th:text="${f.frase}"
-							style="font-weight: bold; font-size: 40px;"></span>
+							style="font-weight: bold; font-size: 33px;"></span>
 					</div>
 					<div class="card-body">
 						<h5 class="card-title">
-							<span id="pronunciacionT" style="font-size: 25px; display: none"
+							<span id="pronunciacionT" style="font-size: 15px; display: none"
 								th:text="${f.pronunciacion} != null ? ' ('+${f.pronunciacion}+')' : ''"></span>
 						</h5>
 						<div class="card-text">
 							<div id="traduccionesList" style="display: none">
 								<div th:each="t,iter : ${f.traduccionesList}">
-									<p th:text="${t.traduccion}" style="margin: 0;font-size: 25px"></p>
+									<p th:text="${t.traduccion}" style="margin: 0; font-size: 20px"></p>
 								</div>
 							</div>
 							<div id="contenedorBtnMostrarTraduccion">
 								<button type="button"
 									th:onclick="'frasesJs.mostrarTraduccion()'"
-									class="btn btn-primary btn-lg">Mostrar traducci&oacute;n</button>
+									class="btn btn-primary btn-lg">Mostrar
+									traducci&oacute;n</button>
 
 							</div>
 						</div>
@@ -56,13 +59,18 @@
 								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
 								class="btn btn-dark btn-lg">&nbsp;&nbsp;&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;</button>
 						</div>
+						<button class="btn btn-primary" type="button" disabled id="loading" style="display: none">
+							<span class="spinner-border spinner-border-sm" role="status"
+								aria-hidden="true"></span> Loading...
+						</button>
 					</div>
 				</div>
 				<div class="alert alert-success" role="alert" th:if="${finalizado}">
 					<h4 class="alert-heading">Well done!</h4>
 					<p>Pr&aacute;ctica completada!</p>
 					<hr>
-					<a class="btn btn-primary" th:href="@{/learn/frases}" role="button">Continuar practicando</a>
+					<a class="btn btn-primary btn-lg" th:href="@{/learn/frases}"
+						role="button">Continuar practicando</a>
 				</div>
 			</div>
 		</div>

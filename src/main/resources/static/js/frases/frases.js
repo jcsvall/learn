@@ -9,15 +9,23 @@ var frasesJs = (function(){
 				console.log(response);
 			});			
 		},
-		guardarNo: function (idForm) {	
+		guardarNo: function (idForm) {
+			$("#contenedorBtns").hide();
+			$("#loading").show();
 			$("#contenido").load(urlBase + "/ajax/guardar/no/"+idForm,
 				function (response) {
+				$("#contenedorBtns").show();
+				$("#loading").hide();
 				console.log(response);
 			});			
 		},
 		guardar : function(idForm) {
+			$("#contenedorBtns").hide();
+		    $("#loading").show();
 			$("#contenido").load(urlBase + "/ajax/guardar/"+idForm,
-					function (response) {
+					function (response) {	
+				    $("#contenedorBtns").show();
+			        $("#loading").hide();
 					console.log(response);
 				});
 //			var form="#contenedorForm"+idForm;
