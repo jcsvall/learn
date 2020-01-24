@@ -10,7 +10,7 @@
 
 			<div id="accordion" th:fragment="accordionFragment">
 				<br />
-				<div class="progress">
+				<div class="progress" style="height: 40px;">
 					<div th:class="${cssBarra}" role="progressbar"
 						th:aria-valuenow="${porcentajeValue}" aria-valuemin="0"
 						aria-valuemax="100"><span th:text="${porcentajeValue}+'%'"></span></div>
@@ -24,23 +24,23 @@
 				<div class="card text-center" th:each="f,iter : ${frasesList}">
 					<div class="card-header">
 						<span th:text="${f.frase}"
-							style="font-weight: bold; font-size: 30px;"></span>
+							style="font-weight: bold; font-size: 40px;"></span>
 					</div>
 					<div class="card-body">
 						<h5 class="card-title">
-							<span id="pronunciacionT" style="font-size: 15px; display: none"
+							<span id="pronunciacionT" style="font-size: 25px; display: none"
 								th:text="${f.pronunciacion} != null ? ' ('+${f.pronunciacion}+')' : ''"></span>
 						</h5>
 						<div class="card-text">
 							<div id="traduccionesList" style="display: none">
 								<div th:each="t,iter : ${f.traduccionesList}">
-									<p th:text="${t.traduccion}" style="margin: 0"></p>
+									<p th:text="${t.traduccion}" style="margin: 0;font-size: 25px"></p>
 								</div>
 							</div>
 							<div id="contenedorBtnMostrarTraduccion">
 								<button type="button"
 									th:onclick="'frasesJs.mostrarTraduccion()'"
-									class="btn btn-primary">Mostrar traducci&oacute;n</button>
+									class="btn btn-primary btn-lg">Mostrar traducci&oacute;n</button>
 
 							</div>
 						</div>
@@ -51,10 +51,10 @@
 							<label>Lo sabi&aacute;s</label>
 							<button type="button"
 								th:onclick="'frasesJs.guardar('+${f.id}+')'"
-								class="btn btn-primary">Si</button>
+								class="btn btn-primary btn-lg">&nbsp;&nbsp;&nbsp;&nbsp;Si&nbsp;&nbsp;&nbsp;&nbsp;</button>
 							<button type="button"
 								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
-								class="btn btn-dark">No</button>
+								class="btn btn-dark btn-lg">&nbsp;&nbsp;&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;</button>
 						</div>
 					</div>
 				</div>
