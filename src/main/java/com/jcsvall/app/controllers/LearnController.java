@@ -35,6 +35,7 @@ public class LearnController {
 
 	private int totalElementosIniciales;
 	private int totalFrasesPendientes;
+	private Boolean esReverse;
 
 	@RequestMapping("/principal")
 	public String principal(ModelMap model) {
@@ -44,6 +45,7 @@ public class LearnController {
 
 	@RequestMapping("/frases")
 	public String frases(ModelMap model) {
+		esReverse = false;
 		List<Frases> frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, "REVISANDO");
 		totalFrasesPendientes = frasesPendientes.size();
 
@@ -97,6 +99,10 @@ public class LearnController {
 			model.addAttribute("finalizado", true);
 		}
 		model.put("frasesList", fraseOne);
+		
+		if(esReverse) {
+			return "learn/frasesReverse :: accordionFragment";
+		}
 		return "learn/frases :: accordionFragment";
 	}
 
@@ -112,6 +118,9 @@ public class LearnController {
 		calculoBarraProgress(model, frasesList);
 		List<Frases> fraseOne = Arrays.asList(frasesList.get(0));
 		model.put("frasesList", fraseOne);
+		if(esReverse) {
+			return "learn/frasesReverse :: accordionFragment";
+		}
 		return "learn/frases :: accordionFragment";
 	}
 
@@ -163,5 +172,33 @@ public class LearnController {
 	private Double getWithTwoDecimals(Double value) {
 		DecimalFormat df = new DecimalFormat("#.00");
 		return Double.valueOf(df.format(value));
+	}
+	
+	@RequestMapping("/frases_reverse")
+	public String frasesReverse(ModelMap model) {
+		esReverse = true;
+		List<Frases> frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, "REVISANDO");
+		totalFrasesPendientes = frasesPendientes.size();
+
+		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
+		totalElementosIniciales = frasesList.size();
+
+		if (totalFrasesPendientes > 0) {
+			frasesList = frasesPendientes;
+		}
+
+		List<Frases> fraseOne = new ArrayList<>();
+		if (!frasesList.isEmpty()) {
+			Frases firs = frasesList.get(0);
+			fraseOne.add(firs);
+		}
+		model.put("frasesList", fraseOne);
+		model.put("frasesListLazyInit", frasesList);
+		model.addAttribute("cssBarra", "progress-bar w-0");
+		model.addAttribute("porcentajeValue", "0");
+		
+		calculoBarraProgress(model, frasesList);
+		
+		return "learn/frasesReverse";
 	}
 }
