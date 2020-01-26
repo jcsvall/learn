@@ -9,12 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import com.jcsvall.app.entities.Frases;
 import com.jcsvall.app.entities.Usuarios;
+import com.jcsvall.app.utils.Constantes;
 
 @Repository("frasesRepository")
 public interface FrasesRepository extends JpaRepository<Frases, Serializable>{
 	public List<Frases> findByIdUsuarios(Usuarios usuarios);
 	
-	@Query("SELECT f FROM Frases f WHERE f.idUsuarios.id = :id and f.estado <> 'NUEVO' order by f.fechaUpdate asc")
+	@Query("SELECT f FROM Frases f WHERE f.idUsuarios.id = :id and f.estado NOT IN('"+Constantes.NUEVO+"','"+Constantes.PERSONALIZADO+"') order by f.fechaUpdate asc")
 	public List<Frases> findFirsTendByIdUsuarioAndFechaUpdate(Integer id);
 	
 	public Frases findById(Integer id);

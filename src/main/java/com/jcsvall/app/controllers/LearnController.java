@@ -22,6 +22,7 @@ import com.jcsvall.app.dtos.FraseDto;
 import com.jcsvall.app.entities.Frases;
 import com.jcsvall.app.entities.Traducciones;
 import com.jcsvall.app.services.FrasesService;
+import com.jcsvall.app.utils.Constantes;
 
 @Controller
 @RequestMapping("/learn")
@@ -68,9 +69,9 @@ public class LearnController {
 		model.put("frasesListLazyInit", frasesList);
 		model.addAttribute("cssBarra", "progress-bar w-0");
 		model.addAttribute("porcentajeValue", "0");
-		
+
 		calculoBarraProgress(model, frasesList);
-		
+
 		return "learn/frases";
 	}
 
@@ -102,8 +103,8 @@ public class LearnController {
 			model.addAttribute("finalizado", true);
 		}
 		model.put("frasesList", fraseOne);
-		
-		if(esReverse) {
+
+		if (esReverse) {
 			return "learn/frasesReverse :: accordionFragment";
 		}
 		return "learn/frases :: accordionFragment";
@@ -121,7 +122,7 @@ public class LearnController {
 		calculoBarraProgress(model, frasesList);
 		List<Frases> fraseOne = Arrays.asList(frasesList.get(0));
 		model.put("frasesList", fraseOne);
-		if(esReverse) {
+		if (esReverse) {
 			return "learn/frasesReverse :: accordionFragment";
 		}
 		return "learn/frases :: accordionFragment";
@@ -176,17 +177,17 @@ public class LearnController {
 		DecimalFormat df = new DecimalFormat("#.00");
 		return Double.valueOf(df.format(value));
 	}
-	
+
 	@RequestMapping("/frases_reverse")
 	public String frasesReverse(ModelMap model) {
 		esReverse = true;
 		List<Frases> frasesPendientes = new ArrayList<>();
-		if(frasesListToReverse != null && !frasesListToReverse.isEmpty()) {
+		if (frasesListToReverse != null && !frasesListToReverse.isEmpty()) {
 			frasesPendientes = frasesService.save(frasesListToReverse);
-		}else {
+		} else {
 			frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, "REVISANDO");
-		}		
-		
+		}
+
 		totalFrasesPendientes = frasesPendientes.size();
 
 		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
@@ -205,22 +206,39 @@ public class LearnController {
 		model.put("frasesListLazyInit", frasesList);
 		model.addAttribute("cssBarra", "progress-bar w-0");
 		model.addAttribute("porcentajeValue", "0");
-		
+
 		calculoBarraProgress(model, frasesList);
-		
+
 		return "learn/frasesReverse";
 	}
-	
+
 	@RequestMapping("/frases_lista")
 	public String frasesList(ModelMap model) {
-		
-		frasesList = frasesService.findByUsuariosDesc(1);		
+
+		frasesList = frasesService.findByUsuariosDesc(1);
 		int total = frasesList.size();
-				
+
 		model.put("frasesList", frasesList);
 		model.addAttribute("fraseTotal", total);
-		calculoBarraProgress(model, frasesList);
-		
+		// calculoBarraProgress(model, frasesList);
+
 		return "learn/frases_lista";
 	}
+
+	@RequestMapping(value = "/ajax/personalizar/{id}")
+	public String personalizar(@PathVariable("id") Integer id, ModelMap model) {
+		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
+		if (frase != null) {
+			frase.setEstado(Constantes.PERSONALIZADO);
+			frasesService.save(frase);
+		}
+
+		int total = frasesList.size();
+		model.put("frasesList", frasesList);
+		model.addAttribute("fraseTotal", total);
+
+		return "learn/frases_lista :: accordionFragment";
+	}
+	
+	
 }

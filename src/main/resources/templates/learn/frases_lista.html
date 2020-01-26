@@ -12,7 +12,8 @@
 				<br />
 				<div id="cantidad">
 					<button type="button" class="btn btn-info">
-						Frases en total <span class="badge badge-light" th:text="${fraseTotal}"></span>
+						Frases en total <span class="badge badge-light"
+							th:text="${fraseTotal}"></span>
 					</button>
 				</div>
 				<div class="card" th:each="f,iter : ${frasesListLazyInit}"
@@ -21,7 +22,8 @@
 						<p th:text="${t.traduccion}" style="margin: 0"></p>
 					</div>
 				</div>
-				<div class="card text-center" th:each="f,iter : ${frasesList}" style="margin-top: 10px;">
+				<div class="card text-center" th:each="f,iter : ${frasesList}"
+					style="margin-top: 10px;">
 					<div class="card-header">
 						<span th:text="${f.frase}"
 							style="font-weight: bold; font-size: 33px;"></span>
@@ -45,8 +47,8 @@
 					<div class="card-footer text-muted">
 						<div id="contenedorBtns" style="display: block">
 							<button type="button"
-								th:onclick="'frasesJs.guardar('+${f.id}+')'"
-								class="btn btn-info">Agregar a pr&aacute;cticas</button>
+								th:onclick="'frasesListJs.perzonalizado('+${f.id}+')'"
+								th:class="${f.estado} == 'PERSONALIZADO' ? 'btn btn-info disabled':'btn btn-info'">Agregar a pr&aacute;cticas</button>
 							<button type="button"
 								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
 								class="btn btn-secondary">Actualizar</button>
@@ -64,7 +66,7 @@
 
 	<!-- js para eventos -->
 	<div layout:fragment="my_js">
-<!-- 		<script th:src="@{/js/frases/frases.js}"></script> -->
+				<script th:src="@{/js/frases/frases_list.js}"></script>
 	</div>
 
 </body>
