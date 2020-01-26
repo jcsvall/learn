@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{layouts/default}">
+<head>
+<title>Learn principal page</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-sm" id="contenido">
+
+			<div id="accordion" th:fragment="accordionFragment">
+				<br />
+				<div id="cantidad">
+					<button type="button" class="btn btn-info">
+						Frases en total <span class="badge badge-light" th:text="${fraseTotal}"></span>
+					</button>
+				</div>
+				<div class="card" th:each="f,iter : ${frasesListLazyInit}"
+					style="display: none">
+					<div th:each="t,iter : ${f.traduccionesList}">
+						<p th:text="${t.traduccion}" style="margin: 0"></p>
+					</div>
+				</div>
+				<div class="card text-center" th:each="f,iter : ${frasesList}" style="margin-top: 10px;">
+					<div class="card-header">
+						<span th:text="${f.frase}"
+							style="font-weight: bold; font-size: 33px;"></span>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">
+							<span id="pronunciacionT" style="font-size: 15px; display: block"
+								th:text="${f.pronunciacion} != null ? ' ('+${f.pronunciacion}+')' : ''"></span>
+						</h5>
+						<div class="card-text">
+							<div id="traduccionesList" style="margin: 0px; display: block">
+								<div th:each="t,iter : ${f.traduccionesList}">
+									<span th:text="${t.traduccion}"
+										style="margin: 0; font-size: 20px"></span>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="card-footer text-muted">
+						<div id="contenedorBtns" style="display: block">
+							<button type="button"
+								th:onclick="'frasesJs.guardar('+${f.id}+')'"
+								class="btn btn-info">Agregar a pr&aacute;cticas</button>
+							<button type="button"
+								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
+								class="btn btn-secondary">Actualizar</button>
+							<button type="button"
+								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
+								class="btn btn-danger">Eliminar</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+	<!-- js para eventos -->
+	<div layout:fragment="my_js">
+<!-- 		<script th:src="@{/js/frases/frases.js}"></script> -->
+	</div>
+
+</body>
+</html>

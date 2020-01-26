@@ -57,11 +57,12 @@
 								class="btn btn-primary btn-lg">&nbsp;&nbsp;&nbsp;&nbsp;Si&nbsp;&nbsp;&nbsp;&nbsp;</button>
 							<button type="button"
 								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
-								class="btn btn-dark btn-lg">&nbsp;&nbsp;&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;</button>
+								class="btn btn-secondary btn-lg">&nbsp;&nbsp;&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;</button>
 						</div>
-						<button class="btn btn-primary" type="button" disabled id="loading" style="display: none">
+						<button class="btn btn-primary btn-lg" type="button" disabled
+							id="loading" style="display: none">
 							<span class="spinner-border spinner-border-sm" role="status"
-								aria-hidden="true"></span> Loading...
+								aria-hidden="true"></span> Loading please wait...
 						</button>
 					</div>
 				</div>
@@ -70,8 +71,10 @@
 					<p>Pr&aacute;ctica completada!</p>
 					<hr>
 					<a class="btn btn-primary btn-lg" th:href="@{/learn/frases}"
-						role="button">Continuar practicando</a>
-				</div>
+						role="button">Continuar practicando</a> 
+					<a	class="btn btn-secondary btn-lg" th:href="@{/learn/frases_reverse}"
+						role="button">Practicar frases anteriores espa&ntilde;ol a ingles</a>
+				</div>				
 			</div>
 		</div>
 

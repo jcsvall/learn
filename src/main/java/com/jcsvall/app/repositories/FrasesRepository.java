@@ -22,4 +22,6 @@ public interface FrasesRepository extends JpaRepository<Frases, Serializable>{
 	@Query("SELECT f FROM Frases f WHERE f.idUsuarios.id = :id AND f.estado=:estado order by f.id")
 	public List<Frases> finDByIdUsuarioAndEstado(Integer id,String estado);
 	
+	@Query("SELECT f FROM Frases f WHERE f.idUsuarios.id = :id order by f.id desc")
+	public List<Frases> findByIdUsuarioDesc(Integer id);
 }

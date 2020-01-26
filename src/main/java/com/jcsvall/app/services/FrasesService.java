@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jcsvall.app.dtos.FraseDto;
 import com.jcsvall.app.entities.Frases;
+import com.jcsvall.app.entities.Usuarios;
 
 public interface FrasesService {
 	public abstract Frases save(Frases frases);
@@ -17,4 +18,9 @@ public interface FrasesService {
 	public abstract Frases findById(Integer id);
 	
 	public abstract List<Frases> finDByIdUsuarioAndEstado(Integer id,String estado);
+	
+	public abstract List<Frases> save(List<Frases> frases);
+	
+	public abstract List<Frases> findByUsuariosDesc(Integer id);
+	
 }

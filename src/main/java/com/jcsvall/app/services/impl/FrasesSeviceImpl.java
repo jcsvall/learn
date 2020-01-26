@@ -119,4 +119,14 @@ public class FrasesSeviceImpl implements FrasesService {
 		return frasesRepository.finDByIdUsuarioAndEstado(id, estado);
 	}
 
+	@Override
+	public List<Frases> save(List<Frases> frases) {
+		return frasesRepository.saveAll(frases);
+	}
+
+	@Override
+	public List<Frases> findByUsuariosDesc(Integer id) {
+		return frasesRepository.findByIdUsuarioDesc(id);
+	}
+
 }

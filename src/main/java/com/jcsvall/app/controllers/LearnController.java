@@ -32,6 +32,7 @@ public class LearnController {
 	private FrasesService frasesService;
 
 	private List<Frases> frasesList;
+	private List<Frases> frasesListToReverse;
 
 	private int totalElementosIniciales;
 	private int totalFrasesPendientes;
@@ -50,6 +51,8 @@ public class LearnController {
 		totalFrasesPendientes = frasesPendientes.size();
 
 		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
+		frasesListToReverse = new ArrayList<>();
+		frasesListToReverse.addAll(frasesList);
 		totalElementosIniciales = frasesList.size();
 
 		if (totalFrasesPendientes > 0) {
@@ -177,7 +180,13 @@ public class LearnController {
 	@RequestMapping("/frases_reverse")
 	public String frasesReverse(ModelMap model) {
 		esReverse = true;
-		List<Frases> frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, "REVISANDO");
+		List<Frases> frasesPendientes = new ArrayList<>();
+		if(frasesListToReverse != null && !frasesListToReverse.isEmpty()) {
+			frasesPendientes = frasesService.save(frasesListToReverse);
+		}else {
+			frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, "REVISANDO");
+		}		
+		
 		totalFrasesPendientes = frasesPendientes.size();
 
 		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
@@ -200,5 +209,18 @@ public class LearnController {
 		calculoBarraProgress(model, frasesList);
 		
 		return "learn/frasesReverse";
+	}
+	
+	@RequestMapping("/frases_lista")
+	public String frasesList(ModelMap model) {
+		
+		frasesList = frasesService.findByUsuariosDesc(1);		
+		int total = frasesList.size();
+				
+		model.put("frasesList", frasesList);
+		model.addAttribute("fraseTotal", total);
+		calculoBarraProgress(model, frasesList);
+		
+		return "learn/frases_lista";
 	}
 }
