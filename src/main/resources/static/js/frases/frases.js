@@ -13,7 +13,11 @@ var frasesJs = (function(){
 			$("#contenedorBtns").hide();
 			$("#loading").show();
 			$("#contenido").load(urlBase + "/ajax/guardar/no/"+idForm,
-				function (response) {				
+				function (response, status, xhr) {		
+				if ( status == "error" ) {
+				    var msg = "Lo sentimos ocurrio un error: ";
+				    alert( msg + xhr.status + " " + xhr.statusText );
+				}
 				$("#loading").hide();
 				console.log(response);
 			});			
@@ -22,7 +26,11 @@ var frasesJs = (function(){
 			$("#contenedorBtns").hide();
 		    $("#loading").show();
 			$("#contenido").load(urlBase + "/ajax/guardar/"+idForm,
-					function (response) {
+					function (response,status, xhr) {
+				    if ( status == "error" ) {
+				       var msg = "Lo sentimos ocurrio un error: ";
+				       alert( msg + xhr.status + " " + xhr.statusText );
+				    }
 			        $("#loading").hide();
 					console.log(response);
 				});
@@ -68,9 +76,9 @@ var frasesJs = (function(){
 			$("#traduccionesList").show();
 			$("#contenedorBtns").show();
 		},
-		buildError : function(errorMessage) {
-			var msg = '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><p class="alert-heading">'+errorMessage+'</p></div>';
-			return msg;
+		continuarPractica : function() {
+			$("#loading2").show();
+			$("#btnsPracticar").hide();
 		},
 		validarForm : function() {
 			var form = $(CONTENEDOR_FORM)[0];

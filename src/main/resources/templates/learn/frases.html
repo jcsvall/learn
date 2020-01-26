@@ -67,14 +67,22 @@
 					</div>
 				</div>
 				<div class="alert alert-success" role="alert" th:if="${finalizado}">
-					<h4 class="alert-heading">Well done!</h4>
-					<p>Pr&aacute;ctica completada!</p>
-					<hr>
-					<a class="btn btn-primary btn-lg" th:href="@{/learn/frases}"
-						role="button">Continuar practicando</a> 
-					<a	class="btn btn-secondary btn-lg" th:href="@{/learn/frases_reverse}"
-						role="button">Practicar frases anteriores espa&ntilde;ol a ingles</a>
-				</div>				
+					<div id="btnsPracticar">
+						<h4 class="alert-heading">Well done!</h4>
+						<p>Pr&aacute;ctica completada!</p>
+						<hr>
+						<a class="btn btn-primary btn-lg" th:href="@{/learn/frases}"
+							role="button" id="btnPracticando" onclick="frasesJs.continuarPractica()">Continuar practicando</a><br /> <br /> <a
+							class="btn btn-secondary btn-lg" id="btnEspaIngl"
+							th:href="@{/learn/frases_reverse}" role="button" onclick="frasesJs.continuarPractica()">Practicar
+							frases anteriores espa&ntilde;ol a ingles</a>						
+					</div>
+					<button class="btn btn-primary btn-lg" type="button" disabled
+							id="loading2" style="display: none">
+							<span class="spinner-border spinner-border-sm" role="status"
+								aria-hidden="true"></span> Loading please wait...
+						</button>
+				</div>
 			</div>
 		</div>
 
