@@ -52,13 +52,16 @@ public class LearnController {
 		totalFrasesPendientes = frasesPendientes.size();
 
 		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
-		frasesListToReverse = new ArrayList<>();
-		frasesListToReverse.addAll(frasesList);
+//		frasesListToReverse = new ArrayList<>();
+//		frasesListToReverse.addAll(frasesList);
 		totalElementosIniciales = frasesList.size();
 
 		if (totalFrasesPendientes > 0) {
 			frasesList = frasesPendientes;
 		}
+		
+		frasesListToReverse = new ArrayList<>();
+		frasesListToReverse.addAll(frasesList);
 
 		List<Frases> fraseOne = new ArrayList<>();
 		if (!frasesList.isEmpty()) {
@@ -182,11 +185,10 @@ public class LearnController {
 	public String frasesReverse(ModelMap model) {
 		esReverse = true;
 		List<Frases> frasesPendientes = new ArrayList<>();
-		if (frasesListToReverse != null && !frasesListToReverse.isEmpty()) {
+		frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, "REVISANDO");
+		if (frasesListToReverse != null && !frasesListToReverse.isEmpty() && frasesPendientes.isEmpty()) {
 			frasesPendientes = frasesService.save(frasesListToReverse);
-		} else {
-			frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, "REVISANDO");
-		}
+		} 
 
 		totalFrasesPendientes = frasesPendientes.size();
 
