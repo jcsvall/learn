@@ -46,12 +46,17 @@
 
 					<div class="card-footer text-muted">
 						<div id="contenedorBtns" style="display: block">
-							<button type="button"
-								th:onclick="'frasesListJs.perzonalizado('+${f.id}+')'"
-								th:class="${f.estado} == 'PERSONALIZADO' ? 'btn btn-info disabled':'btn btn-info'">Agregar a pr&aacute;cticas</button>
+							<button type="button" th:if="${f.estado} != 'PERSONALIZADO'"
+								th:onclick="'frasesListJs.perzonalizado('+${f.id}+',1)'"
+								class="btn btn-info">Agregar a pr&aacute;cticas</button>
+							
+							<button th:if="${f.estado} == 'PERSONALIZADO'" type="button" class="btn btn-success"
+								th:onclick="'frasesListJs.perzonalizado('+${f.id}+',0)'">Quitar de pr&aacute;cticas</button>
+							
 							<button type="button"
 								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
 								class="btn btn-secondary">Actualizar</button>
+							
 							<button type="button"
 								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
 								class="btn btn-danger">Eliminar</button>

@@ -234,11 +234,15 @@ public class LearnController {
 		return "learn/frases_lista";
 	}
 
-	@RequestMapping(value = "/ajax/personalizar/{id}")
-	public String personalizar(@PathVariable("id") Integer id, ModelMap model) {
+	@RequestMapping(value = "/ajax/personalizar/{id}/{accion}")
+	public String personalizar(@PathVariable("id") Integer id,@PathVariable("accion") Integer accion, ModelMap model) {
+		String estado = Constantes.PERSONALIZADO;
+		if(accion == 0) {
+			estado = Constantes.REVISADO;
+		}
 		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
 		if (frase != null) {
-			frase.setEstado(Constantes.PERSONALIZADO);
+			frase.setEstado(estado);
 			frasesService.save(frase);
 		}
 
