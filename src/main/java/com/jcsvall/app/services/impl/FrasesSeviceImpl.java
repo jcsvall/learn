@@ -96,7 +96,7 @@ public class FrasesSeviceImpl implements FrasesService {
 		f.setFechaUpdate(new Date());
 		f.setFrase(frase.getFrase());
 		f.setPronunciacion(frase.getPronunciacion());
-		f.setIdCategorias(new Categorias(1));
+		f.setIdCategorias(new Categorias(frase.getCategoriaId()));
 		f.setIdUsuarios(new Usuarios(1));
 		List<Traducciones> tradList = new ArrayList<>();
 		for(TraduccionDto tr:frase.getTraduccionesList()) {

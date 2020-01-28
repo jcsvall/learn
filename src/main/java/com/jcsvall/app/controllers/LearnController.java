@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jcsvall.app.dtos.FraseDto;
+import com.jcsvall.app.entities.Categorias;
 import com.jcsvall.app.entities.Frases;
 import com.jcsvall.app.entities.Traducciones;
+import com.jcsvall.app.services.CategoriasService;
 import com.jcsvall.app.services.FrasesService;
 import com.jcsvall.app.utils.Constantes;
 
@@ -31,6 +33,11 @@ public class LearnController {
 	@Autowired
 	@Qualifier("frasesService")
 	private FrasesService frasesService;
+	
+	@Autowired
+	@Qualifier("categoriasService")
+	private CategoriasService categoriasService;
+
 
 	private List<Frases> frasesList;
 	private List<Frases> frasesListToReverse;
@@ -242,5 +249,10 @@ public class LearnController {
 		return "learn/frases_lista :: accordionFragment";
 	}
 	
-	
+	@RequestMapping(value = "/ajax/accion/{tipo}")
+	public String addInit(@PathVariable("tipo") String tipo, ModelMap model) {
+        List<Categorias> cat = categoriasService.findAll();
+        model.put("categorias", cat);
+		return "learn/add :: formFragment";
+	}
 }

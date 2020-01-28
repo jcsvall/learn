@@ -1,10 +1,23 @@
 var urlBase = '/learn';
+$(document).ready(function(){
+	init();	
+});
+function init(){
+	$("#contenido").load(urlBase + "/ajax/accion/add",
+			function (response, status, xhr) {		
+			if ( status == "error" ) {
+			    var msg = "Lo sentimos ocurrio un error: ";
+			    alert( msg + xhr.status + " " + xhr.statusText );
+			}
+			console.log(response);
+		});	
+}
 var addJs = (function() {
 	return {
 		agregar : function() {
 			var valorTraduccion = $("#traId").val();
 			$("#traducciones").append(
-					"<li class='text-success'>" + valorTraduccion + "</li>");
+					"<li class='text-success'><span class='badge badge-secondary'>" + valorTraduccion + "</spand></li>");
 			$("#traId").val("");
 		},
 		guardar : function() {
@@ -35,8 +48,9 @@ var addJs = (function() {
 		},
 		crearObjeto : function() {
 			var frase = {
-				"frase":$("#fraseId").val(),
-				"pronunciacion":$("#proId").val(),
+				"frase" : $("#fraseId").val(),
+				"pronunciacion" : $("#proId").val(),
+				"categoriaId" : $("#catId").val(),
 				"traduccionesList" : []
 			};
 

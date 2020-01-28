@@ -12,5 +12,6 @@ import lombok.Setter;
 public class FraseDto {
 	private String frase;
 	private String pronunciacion;
+	private Integer categoriaId;
 	private List<TraduccionDto> traduccionesList;
 }
