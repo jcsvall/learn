@@ -17,6 +17,7 @@ var frasesJs = (function(){
 				if ( status == "error" ) {
 				    var msg = "Lo sentimos ocurrio un error: ";
 				    alert( msg + xhr.status + " " + xhr.statusText );
+				    $("#contenedorBtns").show();
 				}
 				$("#loading").hide();
 				console.log(response);
@@ -30,6 +31,7 @@ var frasesJs = (function(){
 				    if ( status == "error" ) {
 				       var msg = "Lo sentimos ocurrio un error: ";
 				       alert( msg + xhr.status + " " + xhr.statusText );
+				       $("#contenedorBtns").show();
 				    }
 			        $("#loading").hide();
 					console.log(response);

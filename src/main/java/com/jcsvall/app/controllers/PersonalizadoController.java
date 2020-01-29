@@ -141,4 +141,9 @@ public class PersonalizadoController {
 		DecimalFormat df = new DecimalFormat("#.00");
 		return Double.valueOf(df.format(value));
 	}
+	
+	@RequestMapping(value = "/select_idioma")
+	public String selectIdioma() {		
+		return "personalizado/selectIdioma";
+	}
 }

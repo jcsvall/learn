@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{layouts/default}">
+<head>
+<title>Learn principal page</title>
+<style>
+.margen {
+	padding-top: 5px;
+	text-align: center;
+}
+
+.personalizado {
+	width: 250px;
+	text-align: center !important;
+	font-size: 25px !important;
+	vertical-align: middle !important;
+}
+
+.pad {
+	padding-top: 501px;
+}
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-sm" id="contenido" style="padding-top: 25px;">
+			<div class="margen">
+				<a class="btn btn-primary btn-lg personalizado"
+					th:href="@{/personalizado/personalizado/i}" style="vertical-align: middle !important">Practicar
+						Ingl&eacute;s</a>
+			</div>
+			<div class="margen">
+				<a class="btn btn-primary btn-lg personalizado"
+					th:href="@{/personalizado/personalizado/e}"><span>Practicar
+						Espa&ntilde;ol</span> </a>
+			</div>
+		</div>
+
+		<!-- js para eventos -->
+		<div layout:fragment="my_js">
+			<script th:src="@{/js/frases/personalizado.js}"></script>
+		</div>
+</body>
+</html>
