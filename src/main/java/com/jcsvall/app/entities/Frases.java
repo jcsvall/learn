@@ -27,6 +27,9 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  *
  * @author scjuan
@@ -51,6 +54,10 @@ public class Frases implements Serializable {
     private String pronunciacion;
     @Column(name = "estado")
     private String estado;
+    @Getter
+    @Setter
+    @Column(name = "orden_personal")
+    private Integer ordenPersonal;
     @Basic(optional = false)
     @Column(name = "fecha_ingreso")
     @Temporal(TemporalType.TIMESTAMP)

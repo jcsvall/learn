@@ -23,4 +23,6 @@ public interface FrasesService {
 	
 	public abstract List<Frases> findByUsuariosDesc(Integer id);
 	
+	public abstract Integer findCountByIdUsuarioAndEstado(Integer id,String estado);
+	
 }

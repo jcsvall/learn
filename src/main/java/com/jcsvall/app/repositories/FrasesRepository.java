@@ -25,4 +25,7 @@ public interface FrasesRepository extends JpaRepository<Frases, Serializable>{
 	
 	@Query("SELECT f FROM Frases f WHERE f.idUsuarios.id = :id order by f.id desc")
 	public List<Frases> findByIdUsuarioDesc(Integer id);
+	
+	@Query("SELECT count(f) FROM Frases f WHERE f.idUsuarios.id = :id AND f.estado = :estado")
+	public Integer findCountByIdUsuarioAndEstado(Integer id, String estado);
 }

@@ -42,21 +42,27 @@
 							</div>
 
 						</div>
+
+						<hr />
+						<button type="button" th:if="${f.estado} != 'PERSONALIZADO'"
+							th:onclick="'frasesListJs.perzonalizado('+${f.id}+',1)'"
+							class="btn btn-info">Agregar a pr&aacute;cticas</button>
+
+						<span th:if="${f.estado} == 'PERSONALIZADO'"
+							 th:text="${f.ordenPersonal}" class="badge badge-dark"></span>
+						<button th:if="${f.estado} == 'PERSONALIZADO'" type="button"
+							class="btn btn-success"
+							th:onclick="'frasesListJs.perzonalizado('+${f.id}+',0)'">Quitar
+							de pr&aacute;cticas</button>
 					</div>
 
 					<div class="card-footer text-muted">
 						<div id="contenedorBtns" style="display: block">
-							<button type="button" th:if="${f.estado} != 'PERSONALIZADO'"
-								th:onclick="'frasesListJs.perzonalizado('+${f.id}+',1)'"
-								class="btn btn-info">Agregar a pr&aacute;cticas</button>
-							
-							<button th:if="${f.estado} == 'PERSONALIZADO'" type="button" class="btn btn-success"
-								th:onclick="'frasesListJs.perzonalizado('+${f.id}+',0)'">Quitar de pr&aacute;cticas</button>
-							
+
 							<button type="button"
 								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
 								class="btn btn-secondary">Actualizar</button>
-							
+
 							<button type="button"
 								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
 								class="btn btn-danger">Eliminar</button>
@@ -71,7 +77,7 @@
 
 	<!-- js para eventos -->
 	<div layout:fragment="my_js">
-				<script th:src="@{/js/frases/frases_list.js}"></script>
+		<script th:src="@{/js/frases/frases_list.js}"></script>
 	</div>
 
 </body>

@@ -129,4 +129,9 @@ public class FrasesSeviceImpl implements FrasesService {
 		return frasesRepository.findByIdUsuarioDesc(id);
 	}
 
+	@Override
+	public Integer findCountByIdUsuarioAndEstado(Integer id, String estado) {
+		return frasesRepository.findCountByIdUsuarioAndEstado(id, estado);
+	}
+
 }

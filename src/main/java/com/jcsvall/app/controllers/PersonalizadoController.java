@@ -37,6 +37,7 @@ public class PersonalizadoController {
 			esReverse = true;
 		}
 		List<Frases> frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, Constantes.PERSONALIZADO);
+		frasesPendientes.sort((f1, f2) -> f1.getOrdenPersonal().compareTo(f2.getOrdenPersonal()));
 		totalFrasesPendientes = frasesPendientes.size();
 		frasesList = new ArrayList<>();
 		frasesList.addAll(frasesPendientes);

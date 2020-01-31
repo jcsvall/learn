@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -237,14 +238,29 @@ public class LearnController {
 	@RequestMapping(value = "/ajax/personalizar/{id}/{accion}")
 	public String personalizar(@PathVariable("id") Integer id,@PathVariable("accion") Integer accion, ModelMap model) {
 		String estado = Constantes.PERSONALIZADO;
-		if(accion == 0) {
-			estado = Constantes.REVISADO;
-		}
+		Integer cantidad = frasesService.findCountByIdUsuarioAndEstado(1, estado) + 1;
+		
 		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
-		if (frase != null) {
-			frase.setEstado(estado);
-			frasesService.save(frase);
+		
+		List<Frases> fraseList = new ArrayList<>();
+		if (accion == 0) {
+			estado = Constantes.REVISADO;
+			cantidad = 0;
+			fraseList = frasesList.stream().filter(f -> f.getEstado().equals(Constantes.PERSONALIZADO) 
+					                            && f.getOrdenPersonal() > frase.getOrdenPersonal()
+					                            && f.getOrdenPersonal() != null
+					                            && f.getOrdenPersonal() != 0).collect(Collectors.toList());
+			for (Frases f : fraseList) {
+                 f.setOrdenPersonal(f.getOrdenPersonal()-1);
+			}
 		}
+		
+		if (frase != null) {	
+			frase.setEstado(estado);
+			frase.setOrdenPersonal(cantidad);
+			frasesService.save(frase);
+			frasesService.save(fraseList);
+		}		
 
 		int total = frasesList.size();
 		model.put("frasesList", frasesList);
