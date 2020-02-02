@@ -49,7 +49,7 @@
 							class="btn btn-info">Agregar a pr&aacute;cticas</button>
 
 						<span th:if="${f.estado} == 'PERSONALIZADO'"
-							 th:text="${f.ordenPersonal}" class="badge badge-dark"></span>
+							th:text="${f.ordenPersonal}" class="badge badge-dark"></span>
 						<button th:if="${f.estado} == 'PERSONALIZADO'" type="button"
 							class="btn btn-success"
 							th:onclick="'frasesListJs.perzonalizado('+${f.id}+',0)'">Quitar
@@ -59,17 +59,110 @@
 					<div class="card-footer text-muted">
 						<div id="contenedorBtns" style="display: block">
 
-							<button type="button"
-								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
-								class="btn btn-secondary">Actualizar</button>
+							<button type="button" class="btn btn-secondary"
+								data-toggle="modal" th:data-target="${'#updateModal_'+f.id}">Actualizar</button>
 
-							<button type="button"
-								class="btn btn-danger"
-								th:onclick="'frasesListJs.eliminar('+${f.id}+')'">Eliminar</button>
+							<button type="button" class="btn btn-danger" data-toggle="modal"
+								th:data-target="${'#confirmacionModal_'+f.id}">Eliminar</button>
 						</div>
+						<!-- Modal confirmacion-->
+						<div class="modal fade" th:id="${'confirmacionModal_'+f.id}"
+							tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Confirmaci&oacute;n</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">Se eliminar&aacute; el registro</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Cancelar</button>
+										<button type="button" class="btn btn-primary"
+											th:onclick="'frasesListJs.eliminar('+${f.id}+')'">Aceptar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Modal update-->
+						<div class="modal fade" th:id="${'updateModal_'+f.id}"
+							tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="updateModalLabel">Actualizando datos</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body" style="text-align: left !important;">
+										<!-- formulario para update -->
+										<form>
+											<div class="form-group">
+												<label for="fraseId_" class="text-primary">Id</label> <input
+													type="text" class="form-control" id="fraseId_"
+													th:value="${f.id}">
+											</div>
+											<div class="form-group">
+												<label for="fraseId" class="text-primary">Frase</label> <input
+													type="text" class="form-control" id="fraseId"
+													th:value="${f.frase}">
+											</div>
+											<div class="form-group">
+												<label for="proId" class="text-primary">Pronunciaci&oacute;n</label>
+												<input type="text" class="form-control" id="proId"
+													th:value="${f.pronunciacion}">
+											</div>
+											<div class="form-group">
+												<label for="catId" class="text-primary">Categorias</label> <select
+													class="form-control form-control-lg" id="catId">
+													<option th:each="cat,iter : ${categorias}"
+														th:text="${cat.categoria}" th:value="${cat.id}"></option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label th:for="${'traId'+f.id}" class="text-primary">Traducci&oacute;n</label>
+												<div class="input-group mb-3">
+													<input type="text" class="form-control" th:id="${'traId'+f.id}">
+													<div class="input-group-append">
+														<button type="button" class="btn btn-success"
+															th:onclick="'frasesListJs.agregar('+${f.id}+')'">Agregar
+															traducci&oacute;n</button>
+													</div>
+												</div>
+											</div>
+											<!-- 					<span class="text-secondary">Traducciones:</span> -->
+											<ul th:id="${'traducciones'+f.id}">
+												<li th:each="t,iter : ${f.traduccionesList}"
+													class='text-success'><span
+													class='badge badge-secondary' th:text="${t.traduccion}"></span></li>
+											</ul>
+
+											<!-- 											<button type="button" class="btn btn-primary" -->
+											<!-- 												onclick="addJs.guardar()">Guardar</button> -->
+										</form>
+
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Cancelar</button>
+										<!-- button type="button" class="btn btn-primary"
+											th:onclick="'frasesListJs.eliminar('+${f.id}+')'">Aceptar</button-->
+									</div>
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
-
 			</div>
 		</div>
 

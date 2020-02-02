@@ -25,7 +25,7 @@ var addJs = (function() {
 			var frase = addJs.crearObjeto();
 			// alert(JSON.stringify(frase));
 			if (frase.traduccionesList.length == 0 || frase.frase.trim() == "") {
-				alert("Debe agregar una frase y almenos una traducción");
+				$('#validacionModal').modal('show');
 			} else {
 				console.log(JSON.stringify(frase));
 				$.ajax({

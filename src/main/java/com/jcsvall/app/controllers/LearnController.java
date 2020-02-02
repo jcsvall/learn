@@ -230,6 +230,9 @@ public class LearnController {
 
 		frasesList = frasesService.findByUsuariosDesc(1);
 		int total = frasesList.size();
+		
+		List<Categorias> cat = categoriasService.findAll();
+        model.put("categorias", cat);
 
 		model.put("frasesList", frasesList);
 		model.addAttribute("fraseTotal", total);
