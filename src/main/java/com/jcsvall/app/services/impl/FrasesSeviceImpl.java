@@ -134,4 +134,14 @@ public class FrasesSeviceImpl implements FrasesService {
 		return frasesRepository.findCountByIdUsuarioAndEstado(id, estado);
 	}
 
+	@Override
+	public Integer deleteById(Integer id) {
+		return frasesRepository.deleteById(id);
+	}
+
+	@Override
+	public void delete(Frases frase) {
+		frasesRepository.delete(frase);		
+	}
+
 }

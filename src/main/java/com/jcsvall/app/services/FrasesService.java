@@ -25,4 +25,8 @@ public interface FrasesService {
 	
 	public abstract Integer findCountByIdUsuarioAndEstado(Integer id,String estado);
 	
+	public abstract Integer deleteById(Integer id);
+	
+	public abstract void delete(Frases frase);
+	
 }

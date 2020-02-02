@@ -142,14 +142,17 @@ public class LearnController {
 	// add
 	@RequestMapping("/add")
 	public String add(ModelMap model) {
-		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
-		model.put("frasesList", frasesList);
+//		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
+	//	model.put("frasesList", frasesList);
 		return "learn/add";
 	}
 
 	@PostMapping("/ajax/crear")
 	public String crear(@RequestBody FraseDto frase, ModelMap model) {
 		Frases creado = frasesService.save(frase);
+		List<Categorias> cat = categoriasService.findAll();
+		model.addAttribute("message","Registro Creado");
+        model.put("categorias", cat);
 		return "learn/add :: formFragment";
 	}
 
@@ -275,4 +278,21 @@ public class LearnController {
         model.put("categorias", cat);
 		return "learn/add :: formFragment";
 	}
+	
+	@RequestMapping(value = "/ajax/eliminar/{id}")
+	public String actuEli(@PathVariable("id") Integer id, ModelMap model) {
+		int total = frasesList.size();
+		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
+		
+		if(frase != null) {
+			frasesService.delete(frase);
+			frasesList.remove(frase);
+			total = frasesList.size();
+		}
+		model.put("frasesList", frasesList);
+		model.addAttribute("fraseTotal", total);
+
+		return "learn/frases_lista :: accordionFragment";
+	}
+	
 }

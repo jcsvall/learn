@@ -64,8 +64,8 @@
 								class="btn btn-secondary">Actualizar</button>
 
 							<button type="button"
-								th:onclick="'frasesJs.guardarNo('+${f.id}+')'"
-								class="btn btn-danger">Eliminar</button>
+								class="btn btn-danger"
+								th:onclick="'frasesListJs.eliminar('+${f.id}+')'">Eliminar</button>
 						</div>
 					</div>
 				</div>
