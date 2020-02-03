@@ -106,7 +106,7 @@
 									<div class="modal-body" style="text-align: left !important;">
 										<!-- formulario para update -->
 										<form>											
-											<div class="form-group">
+											<div class="form-group" style="display:none">
 												<label for="fraseId_" class="text-primary">Id</label> <input
 													type="text" class="form-control" th:id="${'fraseId_'+f.id}"
 													th:value="${f.id}">
@@ -144,7 +144,7 @@
 											<!-- 					<span class="text-secondary">Traducciones:</span> -->
 											<ul th:id="${'traducciones'+f.id}">
 												<li th:id="${'liE'+iter.index+f.id}" th:each="t,iter : ${f.traduccionesList}"
-													class='text-success'><span
+													class='text-success'><span th:id="${'span'+iter.index+f.id}"
 													class='badge badge-secondary' th:text="${t.traduccion}"></span>
 													<span class='badge badge-danger' th:onclick="'frasesListJs.quitarDeLista(\''+'liE'+${iter.index}+${f.id}+'\')'">X</span></li>
 											</ul>

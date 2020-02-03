@@ -38,13 +38,13 @@ var frasesListJs = (function() {
 			});
 			
 			$("#traducciones" + id).append(
-					"<li class='text-success' id='liE"+valorConteoLista+id+"'><span class='badge badge-secondary'>"
+					"<li class='text-success' id='liE"+valorConteoLista+id+"'><span class='badge badge-secondary' id='span"+valorConteoLista+id+"'>"
 							+ valorTraduccion + "</span> <span class='badge badge-danger' onclick='frasesListJs.quitarDeLista(\"liE"+valorConteoLista+id+"\")'>X</span></li>");
 			$(traId).val("");
 		},
 		guardar : function(id) {
 			var frase = frasesListJs.crearObjeto(id);
-			alert(JSON.stringify(frase));
+			//alert(JSON.stringify(frase));
 			if (frase.traduccionesList.length == 0 || frase.frase.trim() == "") {
 				$('#validacionModal').modal('show');//it's not present in the view.
 			} else {
@@ -78,10 +78,13 @@ var frasesListJs = (function() {
 				"traduccionesList" : []
 			};
 
+			var count = 0;
 			$("#traducciones" + id + " li").each(function() {
 				var traduccion = new Object();
-				traduccion.traduccion = $(this).text();
+				//traduccion.traduccion = $(this).text();
+				traduccion.traduccion = $("#span"+count+id).text();
 				frase.traduccionesList.push(traduccion);
+				count++;
 			});
 			return frase;
 		},

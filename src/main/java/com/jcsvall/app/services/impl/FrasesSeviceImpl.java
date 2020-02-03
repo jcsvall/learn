@@ -18,12 +18,17 @@ import com.jcsvall.app.entities.Traducciones;
 import com.jcsvall.app.entities.Usuarios;
 import com.jcsvall.app.repositories.FrasesRepository;
 import com.jcsvall.app.services.FrasesService;
+import com.jcsvall.app.services.TraduccionesService;
 
 @Service("frasesService")
 public class FrasesSeviceImpl implements FrasesService {
 	@Autowired
 	@Qualifier("frasesRepository")
 	FrasesRepository frasesRepository;
+
+	@Autowired
+	@Qualifier("traduccionesService")
+	TraduccionesService traduccionesService;
 
 	@Override
 	public Frases save(Frases frases) {
@@ -40,15 +45,15 @@ public class FrasesSeviceImpl implements FrasesService {
 		List<Frases> frases = new ArrayList<>();
 		String REVISANDO = "REVISANDO";
 		Boolean pendientes = false;
-		frases = finDByIdUsuarioAndEstado(id,REVISANDO);
-		if(!frases.isEmpty()) {
+		frases = finDByIdUsuarioAndEstado(id, REVISANDO);
+		if (!frases.isEmpty()) {
 			pendientes = true;
 			frases = new ArrayList<>();
 		}
-		
-		List<Frases> frasesMarcadasNo=finDByIdUsuarioAndEstado(id,"MARCADO-NO");
+
+		List<Frases> frasesMarcadasNo = finDByIdUsuarioAndEstado(id, "MARCADO-NO");
 		int cont = 0;
-		for (Frases frase : frasesMarcadasNo) {			
+		for (Frases frase : frasesMarcadasNo) {
 			if (cont == 20) {
 				break;
 			}
@@ -58,9 +63,9 @@ public class FrasesSeviceImpl implements FrasesService {
 			frases.add(frase);
 			cont++;
 		}
-		
-		List<Frases> frasesNuevas=finDByIdUsuarioAndEstado(id,"NUEVO");
-		for (Frases frase : frasesNuevas) {			
+
+		List<Frases> frasesNuevas = finDByIdUsuarioAndEstado(id, "NUEVO");
+		for (Frases frase : frasesNuevas) {
 			if (cont == 20) {
 				break;
 			}
@@ -70,7 +75,7 @@ public class FrasesSeviceImpl implements FrasesService {
 			frases.add(frase);
 			cont++;
 		}
-		
+
 		if (cont < 20) {
 			List<Frases> frasesList = frasesRepository.findFirsTendByIdUsuarioAndFechaUpdate(id);
 			for (Frases frase : frasesList) {
@@ -84,9 +89,9 @@ public class FrasesSeviceImpl implements FrasesService {
 				cont++;
 			}
 		}
-		
+
 		frasesRepository.saveAll(frases);
-		
+
 		return frases;
 	}
 
@@ -101,7 +106,7 @@ public class FrasesSeviceImpl implements FrasesService {
 		f.setIdCategorias(new Categorias(frase.getCategoriaId()));
 		f.setIdUsuarios(new Usuarios(1));
 		List<Traducciones> tradList = new ArrayList<>();
-		for(TraduccionDto tr:frase.getTraduccionesList()) {
+		for (TraduccionDto tr : frase.getTraduccionesList()) {
 			Traducciones t = new Traducciones();
 			t.setIdFrases(f);
 			t.setTraduccion(tr.getTraduccion());
@@ -143,24 +148,27 @@ public class FrasesSeviceImpl implements FrasesService {
 
 	@Override
 	public void delete(Frases frase) {
-		frasesRepository.delete(frase);		
+		frasesRepository.delete(frase);
 	}
 
 	@Override
 	public Frases update(FraseDto frase) {
-		Frases f = findById(frase.getId());		
+		Frases f = findById(frase.getId());
+		List<Traducciones> toDelete = f.getTraduccionesList();		
+		f.setTraduccionesList(new ArrayList<>());
 		f.setFechaUpdate(new Date());
 		f.setFrase(frase.getFrase());
 		f.setPronunciacion(frase.getPronunciacion());
 		f.setIdCategorias(new Categorias(frase.getCategoriaId()));
 		List<Traducciones> tradList = new ArrayList<>();
-		for(TraduccionDto tr:frase.getTraduccionesList()) {
+		for (TraduccionDto tr : frase.getTraduccionesList()) {
 			Traducciones t = new Traducciones();
 			t.setIdFrases(f);
 			t.setTraduccion(tr.getTraduccion());
 			tradList.add(t);
 		}
 		f.setTraduccionesList(tradList);
+		traduccionesService.delete(toDelete);
 		return frasesRepository.save(f);
 	}
 
