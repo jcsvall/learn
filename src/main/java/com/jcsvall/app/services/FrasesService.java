@@ -29,4 +29,6 @@ public interface FrasesService {
 	
 	public abstract void delete(Frases frase);
 	
+	public abstract Frases update(FraseDto frase);
+	
 }

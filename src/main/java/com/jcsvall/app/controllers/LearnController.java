@@ -155,6 +155,23 @@ public class LearnController {
         model.put("categorias", cat);
 		return "learn/add :: formFragment";
 	}
+	
+	@PostMapping("/ajax/update")
+	public String update(@RequestBody FraseDto frase, ModelMap model) {
+		frasesService.update(frase);	
+		
+        frasesList = frasesService.findByUsuariosDesc(1);
+		int total = frasesList.size();
+		
+		List<Categorias> cat = categoriasService.findAll();
+        model.put("categorias", cat);
+
+		model.put("frasesList", frasesList);
+		model.addAttribute("fraseTotal", total);
+		model.addAttribute("message","Registro Actualizado");
+
+		return "learn/frases_lista :: accordionFragment";
+	}
 
 	private void calculoBarraProgress(ModelMap model, List<Frases> frasesList) {
 		String valor = "0";

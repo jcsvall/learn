@@ -1,5 +1,7 @@
 package com.jcsvall.app.services.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -142,6 +144,24 @@ public class FrasesSeviceImpl implements FrasesService {
 	@Override
 	public void delete(Frases frase) {
 		frasesRepository.delete(frase);		
+	}
+
+	@Override
+	public Frases update(FraseDto frase) {
+		Frases f = findById(frase.getId());		
+		f.setFechaUpdate(new Date());
+		f.setFrase(frase.getFrase());
+		f.setPronunciacion(frase.getPronunciacion());
+		f.setIdCategorias(new Categorias(frase.getCategoriaId()));
+		List<Traducciones> tradList = new ArrayList<>();
+		for(TraduccionDto tr:frase.getTraduccionesList()) {
+			Traducciones t = new Traducciones();
+			t.setIdFrases(f);
+			t.setTraduccion(tr.getTraduccion());
+			tradList.add(t);
+		}
+		f.setTraduccionesList(tradList);
+		return frasesRepository.save(f);
 	}
 
 }
