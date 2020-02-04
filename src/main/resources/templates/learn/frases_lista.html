@@ -25,6 +25,16 @@
 				<div class="card text-center" th:each="f,iter : ${frasesList}"
 					style="margin-top: 10px;">
 					<div class="card-header">
+						<div class="row">
+							<div class="col-6 col-md-4">
+								<div style="text-align: left">
+									<span class="badge badge-dark" th:text="${iter.index+1}"></span>
+								</div>
+							</div>
+							<div class="col-6 col-md-4">&nbsp;</div>
+							<div class="col-6 col-md-4">&nbsp;</div>
+						</div>
+
 						<span th:text="${f.frase}"
 							style="font-weight: bold; font-size: 33px;"></span>
 					</div>
@@ -49,7 +59,7 @@
 							class="btn btn-info">Agregar a pr&aacute;cticas</button>
 
 						<span th:if="${f.estado} == 'PERSONALIZADO'"
-							th:text="${f.ordenPersonal}" class="badge badge-dark"></span>
+							th:text="${f.ordenPersonal}" class="badge badge-secondary"></span>
 						<button th:if="${f.estado} == 'PERSONALIZADO'" type="button"
 							class="btn btn-success"
 							th:onclick="'frasesListJs.perzonalizado('+${f.id}+',0)'">Quitar
@@ -105,8 +115,8 @@
 									</div>
 									<div class="modal-body" style="text-align: left !important;">
 										<!-- formulario para update -->
-										<form>											
-											<div class="form-group" style="display:none">
+										<form>
+											<div class="form-group" style="display: none">
 												<label for="fraseId_" class="text-primary">Id</label> <input
 													type="text" class="form-control" th:id="${'fraseId_'+f.id}"
 													th:value="${f.id}">
@@ -143,10 +153,13 @@
 											</div>
 											<!-- 					<span class="text-secondary">Traducciones:</span> -->
 											<ul th:id="${'traducciones'+f.id}">
-												<li th:id="${'liE'+iter.index+f.id}" th:each="t,iter : ${f.traduccionesList}"
-													class='text-success'><span th:id="${'span'+iter.index+f.id}"
+												<li th:id="${'liE'+iter.index+f.id}"
+													th:each="t,iter : ${f.traduccionesList}"
+													class='text-success'><span
+													th:id="${'span'+iter.index+f.id}"
 													class='badge badge-secondary' th:text="${t.traduccion}"></span>
-													<span class='badge badge-danger' th:onclick="'frasesListJs.quitarDeLista(\''+'liE'+${iter.index}+${f.id}+'\')'">X</span></li>
+													<span class='badge badge-danger'
+													th:onclick="'frasesListJs.quitarDeLista(\''+'liE'+${iter.index}+${f.id}+'\')'">X</span></li>
 											</ul>
 
 											<!-- 											<button type="button" class="btn btn-primary" -->

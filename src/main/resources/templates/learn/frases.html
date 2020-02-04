@@ -26,12 +26,14 @@
 				<div class="card text-center" th:each="f,iter : ${frasesList}">
 					<div class="card-header">
 						<span th:text="${f.frase}"
-							style="font-weight: bold; font-size: 33px;"></span>
+							style="font-weight: bold; font-size: 33px;"></span><br /> <span
+							id="pronunciacionT" style="font-size: 15px; display: block"
+							th:text="${f.pronunciacion} != null ? ' ('+${f.pronunciacion}+')' : ''"></span>
 					</div>
 					<div class="card-body">
 						<h5 class="card-title">
-							<span id="pronunciacionT" style="font-size: 15px; display: none"
-								th:text="${f.pronunciacion} != null ? ' ('+${f.pronunciacion}+')' : ''"></span>
+<!-- 							<span id="pronunciacionT" style="font-size: 15px; display: none" -->
+<!-- 								th:text="${f.pronunciacion} != null ? ' ('+${f.pronunciacion}+')' : ''"></span> -->
 						</h5>
 						<div class="card-text">
 							<div id="traduccionesList" style="display: none">
@@ -44,6 +46,11 @@
 									th:onclick="'frasesJs.mostrarTraduccion()'"
 									class="btn btn-primary btn-lg">Mostrar
 									traducci&oacute;n</button>
+								<br />
+								<br />
+								<button type="button"
+									th:onclick="'frasesJs.guardar('+${f.id}+')'"
+									class="btn btn-primary btn-lg">Siguente>>></button>
 
 							</div>
 						</div>
@@ -72,16 +79,18 @@
 						<p>Pr&aacute;ctica completada!</p>
 						<hr>
 						<a class="btn btn-primary btn-lg" th:href="@{/learn/frases}"
-							role="button" id="btnPracticando" onclick="frasesJs.continuarPractica()">Continuar practicando</a><br /> <br /> <a
-							class="btn btn-secondary btn-lg" id="btnEspaIngl"
-							th:href="@{/learn/frases_reverse}" role="button" onclick="frasesJs.continuarPractica()">Practicar
-							frases anteriores espa&ntilde;ol a ingles</a>						
+							role="button" id="btnPracticando"
+							onclick="frasesJs.continuarPractica()">Continuar practicando</a><br />
+						<br /> <a class="btn btn-secondary btn-lg" id="btnEspaIngl"
+							th:href="@{/learn/frases_reverse}" role="button"
+							onclick="frasesJs.continuarPractica()">Practicar frases
+							anteriores espa&ntilde;ol a ingles</a>
 					</div>
 					<button class="btn btn-primary btn-lg" type="button" disabled
-							id="loading2" style="display: none">
-							<span class="spinner-border spinner-border-sm" role="status"
-								aria-hidden="true"></span> Loading please wait...
-						</button>
+						id="loading2" style="display: none">
+						<span class="spinner-border spinner-border-sm" role="status"
+							aria-hidden="true"></span> Loading please wait...
+					</button>
 				</div>
 			</div>
 		</div>
