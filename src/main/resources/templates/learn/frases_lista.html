@@ -140,6 +140,7 @@
 												<label for="catId" class="text-primary">Categorias</label> <select
 													class="form-control form-control-lg"
 													th:id="${'catId'+f.id}">
+													<option th:text="${f.idCategorias.categoria}" th:value="${f.idCategorias.id}"></option>
 													<option th:each="cat,iter : ${categorias}"
 														th:text="${cat.categoria}" th:value="${cat.id}"></option>
 												</select>
