@@ -15,10 +15,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Null;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,6 +35,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Categorias.findAll", query = "SELECT c FROM Categorias c")})
 public class Categorias implements Serializable {
+    
+    @JoinColumn(name = "id_usuarios", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private Usuarios idUsuarios;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -105,6 +112,14 @@ public class Categorias implements Serializable {
     @Override
     public String toString() {
         return "com.jcsvall.app.entities.Categorias[ id=" + id + " ]";
+    }
+
+    public Usuarios getIdUsuarios() {
+        return idUsuarios;
+    }
+
+    public void setIdUsuarios(Usuarios idUsuarios) {
+        this.idUsuarios = idUsuarios;
     }
     
 }

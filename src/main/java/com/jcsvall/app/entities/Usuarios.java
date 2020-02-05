@@ -33,6 +33,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u")})
 public class Usuarios implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuarios", fetch = FetchType.LAZY)
+    private List<Categorias> categoriasList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -141,6 +144,15 @@ public class Usuarios implements Serializable {
     @Override
     public String toString() {
         return "com.jcsvall.app.entities.Usuarios[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<Categorias> getCategoriasList() {
+        return categoriasList;
+    }
+
+    public void setCategoriasList(List<Categorias> categoriasList) {
+        this.categoriasList = categoriasList;
     }
     
 }
