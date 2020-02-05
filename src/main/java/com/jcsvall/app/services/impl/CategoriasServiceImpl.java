@@ -25,5 +25,10 @@ public class CategoriasServiceImpl implements CategoriasService{
 	public List<Categorias> findAll() {
 		return categoriasRepository.findAll();
 	}
+	@Override
+	public Categorias findById(Integer id) {
+		// TODO Auto-generated method stub
+		return categoriasRepository.findById(id);
+	}
 
 }

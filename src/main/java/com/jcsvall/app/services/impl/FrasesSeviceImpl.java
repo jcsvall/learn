@@ -17,6 +17,7 @@ import com.jcsvall.app.entities.Frases;
 import com.jcsvall.app.entities.Traducciones;
 import com.jcsvall.app.entities.Usuarios;
 import com.jcsvall.app.repositories.FrasesRepository;
+import com.jcsvall.app.services.CategoriasService;
 import com.jcsvall.app.services.FrasesService;
 import com.jcsvall.app.services.TraduccionesService;
 
@@ -29,6 +30,10 @@ public class FrasesSeviceImpl implements FrasesService {
 	@Autowired
 	@Qualifier("traduccionesService")
 	TraduccionesService traduccionesService;
+	
+	@Autowired
+	@Qualifier("categoriasService")
+	CategoriasService categoriasService;
 
 	@Override
 	public Frases save(Frases frases) {
@@ -159,7 +164,8 @@ public class FrasesSeviceImpl implements FrasesService {
 		f.setFechaUpdate(new Date());
 		f.setFrase(frase.getFrase());
 		f.setPronunciacion(frase.getPronunciacion());
-		f.setIdCategorias(new Categorias(frase.getCategoriaId()));
+		
+		f.setIdCategorias(categoriasService.findById(frase.getCategoriaId()));
 		List<Traducciones> tradList = new ArrayList<>();
 		for (TraduccionDto tr : frase.getTraduccionesList()) {
 			Traducciones t = new Traducciones();

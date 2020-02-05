@@ -28,7 +28,12 @@
 						<div class="row">
 							<div class="col-6 col-md-4">
 								<div style="text-align: left">
-									<span class="badge badge-dark" th:text="${iter.index+1}"></span>
+									<span class="badge badge-success"
+										th:text="${f.idCategorias.categoria}"></span>
+								</div>
+								<div style="text-align: left">
+									<span class="badge badge-dark"
+										th:text="${'#'+(fraseTotal-iter.index)}"></span>
 								</div>
 							</div>
 							<div class="col-6 col-md-4">&nbsp;</div>
