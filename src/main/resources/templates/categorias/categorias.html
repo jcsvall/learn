@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{layouts/default}">
+<head>
+<title>Learn principal page</title>
+<style>
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {.buttonWidth{width: 100%}} 
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {.buttonWidth{width: 100%}} 
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {.buttonWidth{width: 15%}} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {.buttonWidth{width: 15%}} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {.buttonWidth{width: 15%}}
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container" id="contenido">
+			<div th:fragment="formFragment" style="padding-top: 20px;">
+
+				<form>
+					<div class="form-group">
+						<input type="text" class="form-control" id="idCate"
+							placeholder="Ingrese nueva categoria">
+						<button type="button" class="btn btn-primary buttonWidth"
+							style="margin-top: 10px;" onclick="categoriasJs.crear('nuevo')">Crear</button>
+					</div>
+				</form>
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<!-- 							<th scope="col">#</th> -->
+							<th scope="col">Categorias</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cate,iter : ${categorias}" th:id="${'tr_'+cate.id}">
+							<!-- 							<th scope="row" th:text="${iter.index+1}"></th> -->
+							<td th:text="${cate.categoria}"
+								th:onclick="'categoriasJs.ver(&#34;'+'tr_'+${cate.id}+'&#34;)'"></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+	</div>
+
+	<!-- js para eventos -->
+	<div layout:fragment="my_js">
+		<script th:src="@{/js/categorias/categorias.js}"></script>
+	</div>
+
+</body>
+</html>

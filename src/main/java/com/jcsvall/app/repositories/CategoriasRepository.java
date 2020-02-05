@@ -14,7 +14,8 @@ import com.jcsvall.app.utils.Constantes;
 
 @Repository("categoriasRepository")
 public interface CategoriasRepository extends JpaRepository<Categorias, Serializable> {
-	
-	//public List<Categorias> findByIdUsuarios(Usuarios usuarios);
+
+	public List<Categorias> findByIdUsuarios(Usuarios usuarios);
+
 	public Categorias findById(Integer id);
 }

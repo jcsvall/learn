@@ -12,23 +12,29 @@ import com.jcsvall.app.repositories.CategoriasRepository;
 import com.jcsvall.app.services.CategoriasService;
 
 @Service("categoriasService")
-public class CategoriasServiceImpl implements CategoriasService{
+public class CategoriasServiceImpl implements CategoriasService {
 	@Autowired
 	@Qualifier("categoriasRepository")
 	CategoriasRepository categoriasRepository;
+
 	@Override
 	public List<Categorias> findAllByUsuario(Usuarios usuario) {
-		// TODO Auto-generated method stub
-		return null;
+		return categoriasRepository.findByIdUsuarios(usuario);
 	}
+
 	@Override
 	public List<Categorias> findAll() {
 		return categoriasRepository.findAll();
 	}
+
 	@Override
 	public Categorias findById(Integer id) {
-		// TODO Auto-generated method stub
 		return categoriasRepository.findById(id);
+	}
+
+	@Override
+	public Categorias save(Categorias categoria) {
+		return categoriasRepository.save(categoria);
 	}
 
 }
