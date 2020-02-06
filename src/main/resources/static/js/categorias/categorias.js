@@ -5,28 +5,36 @@ $(document).ready(function() {
 function init() {
 }
 var categoriasJs = (function() {
+	var objetoSelected = {};
 	return {
-		ver : function(idTr) {
-			// $("#"+idTr).hide();
-			//$("#" + idTr).css("background-color", "red");
-			alert("idTr");
-			//$("#" + idTr).removeAttr("style");
-			// alert("idTr: "+idTr);
+		ver : function(idTr, idObject, elemento) {
+			objetoSelected.id = idObject;
+			objetoSelected.categoria = $(elemento).text();
+			$('#select').modal('show');
 		},
-		crear : function(tipo) {
+		verEditar : function() {
+			$('#select').modal('hide');
+			$('#edicionDialog').modal('show');
+			$("#idCateEdicion").val(objetoSelected.categoria);
+		},
+		crear : function(accion) {
 			var id = -1;
-			if(tipo != "nuevo"){
-				id=1;
+			var categoria = $("#idCate").val();
+			if (accion == "EDITAR") {
+				id = objetoSelected.id;
+				categoria = $("#idCateEdicion").val();
 			}
-			var valor = $("#idCate").val();
-			$("#contenido").load(urlBase + "/ajax/crear/"+id+"/"+valor,
-					function(response, status, xhr) {
-						if (status == "error") {
-							var msg = "Lo sentimos ocurrio un error: ";
-							alert(msg + xhr.status + " " + xhr.statusText);
-						}
-						console.log(response);
-					});
+			var categoria = {
+				"id" : id,
+				"categoria" : categoria,
+				"accion" : accion
+			};
+			$('#contenido').html(
+					$utilJS.ajax("POST", urlBase + "/ajax/crear", categoria));
+
+			if (accion == "EDITAR") {
+				$utilJS.clearModalTrash();
+			}
 		},
 		crearObjeto : function() {
 

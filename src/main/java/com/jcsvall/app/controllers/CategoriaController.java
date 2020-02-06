@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jcsvall.app.dtos.CategoriaDto;
+import com.jcsvall.app.dtos.FraseDto;
 import com.jcsvall.app.entities.Categorias;
 import com.jcsvall.app.entities.Usuarios;
 import com.jcsvall.app.services.CategoriasService;
@@ -30,15 +34,17 @@ public class CategoriaController {
 		return "categorias/categorias";
 	}
 
-	@RequestMapping("/ajax/crear/{id}/{valor}")
-	public String crearUpdate(@PathVariable("id") Integer id,@PathVariable("valor") String valor, ModelMap model) {
+	@PostMapping("/ajax/crear")
+	public String crearUpdate(@RequestBody CategoriaDto categoriaDto, ModelMap model) {
 		Categorias cat = new Categorias();
-		if(id==-1) {
-			cat.setCategoria(valor);
-			cat.setIdUsuarios(us);
+		cat.setCategoria(categoriaDto.getCategoria());
+		cat.setIdUsuarios(us);
+		if ("EDITAR".equalsIgnoreCase(categoriaDto.getAccion())) {
+			cat.setId(categoriaDto.getId());
 		}
 		categoriasService.save(cat);
 		List<Categorias> catList = categoriasService.findAllByUsuario(us);
+		catList.sort((c1, c2) -> c1.getId().compareTo(c2.getId()));
 		model.put("categorias", catList);
 		return "categorias/categorias :: formFragment";
 	}

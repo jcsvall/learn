@@ -10,4 +10,5 @@ import lombok.Setter;
 public class CategoriaDto {
 	 private Integer id;
 	 private String categoria;
+	 private String accion;
 }
