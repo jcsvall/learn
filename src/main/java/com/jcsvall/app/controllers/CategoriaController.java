@@ -39,10 +39,15 @@ public class CategoriaController {
 		Categorias cat = new Categorias();
 		cat.setCategoria(categoriaDto.getCategoria());
 		cat.setIdUsuarios(us);
+		String classCss = "alert alert-success";
+		String msg = "Creado satisfactoriamente";
 		if ("EDITAR".equalsIgnoreCase(categoriaDto.getAccion())) {
 			cat.setId(categoriaDto.getId());
+			msg = "Editado satisfactoriamente";
 		}
 		categoriasService.save(cat);
+		model.addAttribute("message", msg);
+		model.addAttribute("class", classCss);
 		List<Categorias> catList = categoriasService.findAllByUsuario(us);
 		catList.sort((c1, c2) -> c1.getId().compareTo(c2.getId()));
 		model.put("categorias", catList);
@@ -54,9 +59,11 @@ public class CategoriaController {
 		Categorias cat = categoriasService.findById(id);
 		if (cat.getFrasesList().isEmpty()) {
 			categoriasService.delete(cat);
-			model.addAttribute("message", "eliminado satisfactoriamente");
+			model.addAttribute("message", "Eliminado satisfactoriamente");
+			model.addAttribute("class", "alert alert-success");
 		} else {
 			model.addAttribute("message", "No se puede eliminar porque contiene frases asociadas");
+			model.addAttribute("class", "alert alert-danger");
 		}
 		List<Categorias> catList = categoriasService.findAllByUsuario(us);
 		catList.sort((c1, c2) -> c1.getId().compareTo(c2.getId()));
