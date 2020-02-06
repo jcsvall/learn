@@ -37,4 +37,9 @@ public class CategoriasServiceImpl implements CategoriasService {
 		return categoriasRepository.save(categoria);
 	}
 
+	@Override
+	public void delete(Categorias categoria) {
+		categoriasRepository.delete(categoria);
+	}
+
 }

@@ -9,6 +9,7 @@
 	.buttonWidth {
 		width: 100%
 	}
+	.tamanioParaScroll tbody{height: 400px !important;}
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -16,6 +17,7 @@
 	.buttonWidth {
 		width: 100%
 	}
+	.tamanioParaScroll tbody{height: 500px !important;}
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -23,6 +25,7 @@
 	.buttonWidth {
 		width: 15%
 	}
+	.tamanioParaScroll tbody{height: 500px !important;}
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
@@ -30,6 +33,7 @@
 	.buttonWidth {
 		width: 15%
 	}
+	.tamanioParaScroll tbody{height: 500px !important;}
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -37,7 +41,23 @@
 	.buttonWidth {
 		width: 15%
 	}
+	.tamanioParaScroll tbody{height: 500px !important;}
 }
+
+.table-fixed tbody {
+    height: 500px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+    display: block;
+}
+
 </style>
 </head>
 <body>
@@ -54,7 +74,7 @@
 					</div>
 				</form>
 
-				<table class="table table-hover">
+				<table class="table table-hover table-fixed tamanioParaScroll">
 					<thead>
 						<tr>
 							<!-- 							<th scope="col">#</th> -->
@@ -84,7 +104,7 @@
 							<div class="modal-body" style="text-align: center;">
 								<button type="button" class="btn btn-primary"
 									onclick="categoriasJs.verEditar()">Editar</button>
-								<button type="button" class="btn btn-danger">Eliminar</button>
+								<button type="button" class="btn btn-danger" onclick="categoriasJs.eliminar()">Eliminar</button>
 							</div>
 						</div>
 					</div>

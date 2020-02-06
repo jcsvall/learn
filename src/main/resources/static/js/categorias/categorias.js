@@ -36,8 +36,9 @@ var categoriasJs = (function() {
 				$utilJS.clearModalTrash();
 			}
 		},
-		crearObjeto : function() {
-
+		eliminar : function() {
+			$utilJS.load("#contenido",urlBase + "/ajax/eliminar/"+objetoSelected.id);
+			$utilJS.clearModalTrash();
 		}
 	};
 }());

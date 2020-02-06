@@ -19,6 +19,16 @@ var $utilJS = (function() {
 			});
 			return valToReturn;
 		},
+		load: function(contenedorId,url){
+			$(contenedorId).load(url,
+					function(response, status, xhr) {
+						if (status == "error") {
+							var msg = "Lo sentimos ocurrio un error: ";
+							alert(msg + xhr.status + " " + xhr.statusText);
+						}
+						console.log(response);
+					});
+		},
 		clearModalTrash : function() {
 			$('body').removeClass("modal-open");
 			$('.modal-backdrop').remove();

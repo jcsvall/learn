@@ -11,4 +11,5 @@ public interface CategoriasService {
 	public abstract List<Categorias> findAll();
 	public abstract Categorias findById(Integer id);
 	public abstract Categorias save(Categorias categoria);
+	public abstract void delete(Categorias categoria);
 }

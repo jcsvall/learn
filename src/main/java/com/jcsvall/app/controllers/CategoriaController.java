@@ -49,4 +49,19 @@ public class CategoriaController {
 		return "categorias/categorias :: formFragment";
 	}
 
+	@RequestMapping("/ajax/eliminar/{id}")
+	public String eliminar(@PathVariable("id") Integer id, ModelMap model) {
+		Categorias cat = categoriasService.findById(id);
+		if (cat.getFrasesList().isEmpty()) {
+			categoriasService.delete(cat);
+			model.addAttribute("message", "eliminado satisfactoriamente");
+		} else {
+			model.addAttribute("message", "No se puede eliminar porque contiene frases asociadas");
+		}
+		List<Categorias> catList = categoriasService.findAllByUsuario(us);
+		catList.sort((c1, c2) -> c1.getId().compareTo(c2.getId()));
+		model.put("categorias", catList);
+		return "categorias/categorias :: formFragment";
+	}
+
 }
