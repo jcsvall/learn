@@ -31,22 +31,33 @@ var frasesListJs = (function() {
 		agregar : function(id) {
 			var traId = "#traId" + id;
 			var valorTraduccion = $(traId).val();
-			
+
 			var valorConteoLista = 0;
 			$("#traducciones" + id + " li").each(function() {
 				valorConteoLista++;
 			});
-			
-			$("#traducciones" + id).append(
-					"<li class='text-success' id='liE"+valorConteoLista+id+"'><span class='badge badge-secondary' id='span"+valorConteoLista+id+"'>"
-							+ valorTraduccion + "</span> <span class='badge badge-danger' onclick='frasesListJs.quitarDeLista(\"liE"+valorConteoLista+id+"\")'>X</span></li>");
+
+			$("#traducciones" + id)
+					.append(
+							"<li class='text-success' id='liE"
+									+ valorConteoLista
+									+ id
+									+ "'><span class='badge badge-secondary' id='span"
+									+ valorConteoLista
+									+ id
+									+ "'>"
+									+ valorTraduccion
+									+ "</span> <span class='badge badge-danger' onclick='frasesListJs.quitarDeLista(\"liE"
+									+ valorConteoLista + id
+									+ "\")'>X</span></li>");
 			$(traId).val("");
 		},
 		guardar : function(id) {
 			var frase = frasesListJs.crearObjeto(id);
-			//alert(JSON.stringify(frase));
+			// alert(JSON.stringify(frase));
 			if (frase.traduccionesList.length == 0 || frase.frase.trim() == "") {
-				$('#validacionModal').modal('show');//it's not present in the view.
+				$('#validacionModal').modal('show');// it's not present in the
+				// view.
 			} else {
 				console.log(JSON.stringify(frase));
 				$.ajax({
@@ -81,15 +92,21 @@ var frasesListJs = (function() {
 			var count = 0;
 			$("#traducciones" + id + " li").each(function() {
 				var traduccion = new Object();
-				//traduccion.traduccion = $(this).text();
-				traduccion.traduccion = $("#span"+count+id).text();
+				// traduccion.traduccion = $(this).text();
+				traduccion.traduccion = $("#span" + count + id).text();
 				frase.traduccionesList.push(traduccion);
 				count++;
 			});
 			return frase;
 		},
-		quitarDeLista : function(elemento){
-			$("#"+elemento).remove();
+		quitarDeLista : function(elemento) {
+			$("#" + elemento).remove();
+		},
+		buscar : function() {
+			var ObjetoComunDto = {};			
+			ObjetoComunDto.valor = $("#buscarTxt").val();	
+			$('#contenido').html(
+					$utilJS.ajax("POST", urlBase + "/ajax/buscar",ObjetoComunDto));
 		}
 
 	};

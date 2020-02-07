@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jcsvall.app.dtos.FraseDto;
+import com.jcsvall.app.dtos.ObjetoComunDto;
 import com.jcsvall.app.entities.Categorias;
 import com.jcsvall.app.entities.Frases;
 import com.jcsvall.app.entities.Traducciones;
@@ -311,6 +313,23 @@ public class LearnController {
 		}
 		model.put("frasesList", frasesList);
 		model.addAttribute("fraseTotal", total);
+
+		return "learn/frases_lista :: accordionFragment";
+	}
+	
+	@PostMapping("/ajax/buscar")
+	public String buscar(@RequestBody ObjetoComunDto objectoComunDto, ModelMap model) {
+
+		frasesList = frasesService.findByIdUsuarioAndFraseDesc(1,objectoComunDto.getValor());
+		int total = frasesList.size();
+		
+		List<Categorias> cat = categoriasService.findAll();
+        model.put("categorias", cat);
+
+		model.put("frasesList", frasesList);
+		model.addAttribute("fraseTotal", total);
+		model.addAttribute("buscando", objectoComunDto.getValor());
+		// calculoBarraProgress(model, frasesList);
 
 		return "learn/frases_lista :: accordionFragment";
 	}

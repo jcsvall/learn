@@ -178,4 +178,9 @@ public class FrasesSeviceImpl implements FrasesService {
 		return frasesRepository.save(f);
 	}
 
+	@Override
+	public List<Frases> findByIdUsuarioAndFraseDesc(Integer id, String frase) {
+		return frasesRepository.findByIdUsuarioAndFraseDesc(id, frase);
+	}
+
 }
