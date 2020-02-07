@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{layouts/default}">
+<head>
+<title>Learn principal page</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-sm" id="contenido">
+
+			<div id="accordion" th:fragment="accordionFragment">
+				<div class="card text-white bg-dark mb-3"
+					style="max-width: 100%; margin-top: 1px">
+					<div class="card-body">
+						<div class="custom-control custom-checkbox mb-3">
+							<input type="checkbox" class="custom-control-input" id="todos"
+								required value="todos" onclick="frasesJs.seleccionarTodosLosCheckbox(this)"> <label class="custom-control-label"
+								for="todos" >All</label>
+						</div>
+						<form class="was-validated">
+							<div class="custom-control custom-checkbox mb-3">
+								<input type="checkbox" class="custom-control-input" id="fr_1"
+									required value="1"> <label class="custom-control-label"
+									for="fr_1" >uno</label>
+							</div>
+							<div class="custom-control custom-checkbox mb-3">
+								<input type="checkbox" class="custom-control-input" id="fr_2"
+									required value="2"> <label class="custom-control-label"
+									for="fr_2">dos</label>
+							</div>
+						</form>
+						<div>
+						<button class="btn btn-primary btn-lg" type="button"
+						id="procesar" onclick="frasesJs.realizarPractica()">Process</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- js para eventos -->
+	<div layout:fragment="my_js">
+		<script th:src="@{/js/frases/frases.js}"></script>
+	</div>
+
+</body>
+</html>

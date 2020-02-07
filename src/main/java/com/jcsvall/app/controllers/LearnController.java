@@ -36,11 +36,10 @@ public class LearnController {
 	@Autowired
 	@Qualifier("frasesService")
 	private FrasesService frasesService;
-	
+
 	@Autowired
 	@Qualifier("categoriasService")
 	private CategoriasService categoriasService;
-
 
 	private List<Frases> frasesList;
 	private List<Frases> frasesListToReverse;
@@ -69,7 +68,7 @@ public class LearnController {
 		if (totalFrasesPendientes > 0) {
 			frasesList = frasesPendientes;
 		}
-		
+
 		frasesListToReverse = new ArrayList<>();
 		frasesListToReverse.addAll(frasesList);
 
@@ -145,7 +144,7 @@ public class LearnController {
 	@RequestMapping("/add")
 	public String add(ModelMap model) {
 //		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
-	//	model.put("frasesList", frasesList);
+		// model.put("frasesList", frasesList);
 		return "learn/add";
 	}
 
@@ -153,24 +152,24 @@ public class LearnController {
 	public String crear(@RequestBody FraseDto frase, ModelMap model) {
 		Frases creado = frasesService.save(frase);
 		List<Categorias> cat = categoriasService.findAll();
-		model.addAttribute("message","Registro Creado");
-        model.put("categorias", cat);
+		model.addAttribute("message", "Registro Creado");
+		model.put("categorias", cat);
 		return "learn/add :: formFragment";
 	}
-	
+
 	@PostMapping("/ajax/update")
 	public String update(@RequestBody FraseDto frase, ModelMap model) {
-		frasesService.update(frase);	
-		
-        frasesList = frasesService.findByUsuariosDesc(1);
+		frasesService.update(frase);
+
+		frasesList = frasesService.findByUsuariosDesc(1);
 		int total = frasesList.size();
-		
+
 		List<Categorias> cat = categoriasService.findAll();
-        model.put("categorias", cat);
+		model.put("categorias", cat);
 
 		model.put("frasesList", frasesList);
 		model.addAttribute("fraseTotal", total);
-		model.addAttribute("message","Registro Actualizado");
+		model.addAttribute("message", "Registro Actualizado");
 
 		return "learn/frases_lista :: accordionFragment";
 	}
@@ -218,7 +217,7 @@ public class LearnController {
 		frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, "REVISANDO");
 		if (frasesListToReverse != null && !frasesListToReverse.isEmpty() && frasesPendientes.isEmpty()) {
 			frasesPendientes = frasesService.save(frasesListToReverse);
-		} 
+		}
 
 		totalFrasesPendientes = frasesPendientes.size();
 
@@ -249,9 +248,9 @@ public class LearnController {
 
 		frasesList = frasesService.findByUsuariosDesc(1);
 		int total = frasesList.size();
-		
+
 		List<Categorias> cat = categoriasService.findAll();
-        model.put("categorias", cat);
+		model.put("categorias", cat);
 
 		model.put("frasesList", frasesList);
 		model.addAttribute("fraseTotal", total);
@@ -261,31 +260,32 @@ public class LearnController {
 	}
 
 	@RequestMapping(value = "/ajax/personalizar/{id}/{accion}")
-	public String personalizar(@PathVariable("id") Integer id,@PathVariable("accion") Integer accion, ModelMap model) {
+	public String personalizar(@PathVariable("id") Integer id, @PathVariable("accion") Integer accion, ModelMap model) {
 		String estado = Constantes.PERSONALIZADO;
 		Integer cantidad = frasesService.findCountByIdUsuarioAndEstado(1, estado) + 1;
-		
+
 		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
-		
+
 		List<Frases> fraseList = new ArrayList<>();
 		if (accion == 0) {
 			estado = Constantes.REVISADO;
 			cantidad = 0;
-			fraseList = frasesList.stream().filter(f -> f.getEstado().equals(Constantes.PERSONALIZADO) 
-					                            && f.getOrdenPersonal() > frase.getOrdenPersonal()
-					                            && f.getOrdenPersonal() != null
-					                            && f.getOrdenPersonal() != 0).collect(Collectors.toList());
+			fraseList = frasesList.stream()
+					.filter(f -> f.getEstado().equals(Constantes.PERSONALIZADO)
+							&& f.getOrdenPersonal() > frase.getOrdenPersonal() && f.getOrdenPersonal() != null
+							&& f.getOrdenPersonal() != 0)
+					.collect(Collectors.toList());
 			for (Frases f : fraseList) {
-                 f.setOrdenPersonal(f.getOrdenPersonal()-1);
+				f.setOrdenPersonal(f.getOrdenPersonal() - 1);
 			}
 		}
-		
-		if (frase != null) {	
+
+		if (frase != null) {
 			frase.setEstado(estado);
 			frase.setOrdenPersonal(cantidad);
 			frasesService.save(frase);
 			frasesService.save(fraseList);
-		}		
+		}
 
 		int total = frasesList.size();
 		model.put("frasesList", frasesList);
@@ -293,20 +293,20 @@ public class LearnController {
 
 		return "learn/frases_lista :: accordionFragment";
 	}
-	
+
 	@RequestMapping(value = "/ajax/accion/{tipo}")
 	public String addInit(@PathVariable("tipo") String tipo, ModelMap model) {
-        List<Categorias> cat = categoriasService.findAll();
-        model.put("categorias", cat);
+		List<Categorias> cat = categoriasService.findAll();
+		model.put("categorias", cat);
 		return "learn/add :: formFragment";
 	}
-	
+
 	@RequestMapping(value = "/ajax/eliminar/{id}")
 	public String actuEli(@PathVariable("id") Integer id, ModelMap model) {
 		int total = frasesList.size();
 		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
-		
-		if(frase != null) {
+
+		if (frase != null) {
 			frasesService.delete(frase);
 			frasesList.remove(frase);
 			total = frasesList.size();
@@ -316,22 +316,26 @@ public class LearnController {
 
 		return "learn/frases_lista :: accordionFragment";
 	}
-	
+
 	@PostMapping("/ajax/buscar")
 	public String buscar(@RequestBody ObjetoComunDto objectoComunDto, ModelMap model) {
 
-		frasesList = frasesService.findByIdUsuarioAndFraseDesc(1,objectoComunDto.getValor());
+		frasesList = frasesService.findByIdUsuarioAndFraseDesc(1, objectoComunDto.getValor().toUpperCase());
 		int total = frasesList.size();
-		
+
 		List<Categorias> cat = categoriasService.findAll();
-        model.put("categorias", cat);
+		model.put("categorias", cat);
 
 		model.put("frasesList", frasesList);
 		model.addAttribute("fraseTotal", total);
 		model.addAttribute("buscando", objectoComunDto.getValor());
-		// calculoBarraProgress(model, frasesList);
 
 		return "learn/frases_lista :: accordionFragment";
 	}
-	
+
+	@RequestMapping("/practicar")
+	public String practicar(ModelMap model) {
+		return "learn/practicar";
+	}
+
 }
