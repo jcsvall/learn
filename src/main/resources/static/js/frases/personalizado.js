@@ -50,9 +50,9 @@ var frasesJs = (function() {
 			$("#btnsPracticar").hide();
 		},
 		keyPressEscritura : function() {
-			var frase = $("#f_0").text().toLowerCase();
+			var frase = $("#f_0").text();
 			alert(frase);
-			var escritura = $("#escritura").val().toLowerCase();
+			var escritura = $("#escritura").val();
 
 			if (escritura == frase) {
 				$("#escritura").addClass("is-valid");
