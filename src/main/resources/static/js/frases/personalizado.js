@@ -43,6 +43,7 @@ var frasesJs = (function() {
 			$("#pronunciacionT").show();
 			$("#traduccionesList").show();
 			$("#contenedorBtns").show();
+			frasesJs.keyPressEscritura();
 		},
 		continuarPractica : function() {
 			$("#loading2").show();
