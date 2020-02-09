@@ -51,6 +51,10 @@ var frasesJs = (function() {
 		},
 		keyPressEscritura : function() {
 			var frase = $("#f_0").text().trim().toLowerCase();
+			var punto=frase.substring(frase.length, frase.length-1);
+			if(punto=="."){
+				frase = frase.substring(0, frase.length-1);
+			}
 			//alert(frase);
 			var escritura = $("#escritura").val().trim().toLowerCase();
 
