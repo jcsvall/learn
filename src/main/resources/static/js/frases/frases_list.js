@@ -103,10 +103,18 @@ var frasesListJs = (function() {
 			$("#" + elemento).remove();
 		},
 		buscar : function() {
-			var ObjetoComunDto = {};			
-			ObjetoComunDto.valor = $("#buscarTxt").val();	
+			var ObjetoComunDto = {};
+			ObjetoComunDto.valor = $("#buscarTxt").val();
+
+			if ($("#perCheck").is(':checked')) {
+				ObjetoComunDto.valor1 = "true";				
+			} else {
+				ObjetoComunDto.valor1 = "false";				
+			}
+
 			$('#contenido').html(
-					$utilJS.ajax("POST", urlBase + "/ajax/buscar",ObjetoComunDto));
+					$utilJS.ajax("POST", urlBase + "/ajax/buscar",
+							ObjetoComunDto));
 		}
 
 	};

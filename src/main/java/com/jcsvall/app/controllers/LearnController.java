@@ -319,9 +319,16 @@ public class LearnController {
 
 	@PostMapping("/ajax/buscar")
 	public String buscar(@RequestBody ObjetoComunDto objectoComunDto, ModelMap model) {
-
+        Boolean hasPersonalizadas = Boolean.valueOf(objectoComunDto.getValor1());
 		frasesList = frasesService.findByIdUsuarioAndFraseDesc(1, objectoComunDto.getValor().toUpperCase());
 		int total = frasesList.size();
+		
+		String checked = "false";
+		if(hasPersonalizadas) {
+			checked = "true";
+			frasesList = frasesList.stream().filter(f->f.getEstado() != null && f.getEstado().equals("PERSONALIZADO")).collect(Collectors.toList());
+			total = frasesList.size();
+		}
 
 		List<Categorias> cat = categoriasService.findAll();
 		model.put("categorias", cat);
@@ -329,6 +336,7 @@ public class LearnController {
 		model.put("frasesList", frasesList);
 		model.addAttribute("fraseTotal", total);
 		model.addAttribute("buscando", objectoComunDto.getValor());
+		model.addAttribute("checked", checked);
 
 		return "learn/frases_lista :: accordionFragment";
 	}
