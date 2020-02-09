@@ -152,6 +152,10 @@ public class LearnController {
 	public String crear(@RequestBody FraseDto frase, ModelMap model) {
 		Frases creado = frasesService.save(frase);
 		List<Categorias> cat = categoriasService.findAll();
+		Categorias cate = cat.stream().filter(c -> c.getId() == creado.getIdCategorias().getId()).findFirst()
+				.orElse(null);
+		cat.remove(cate);
+		model.addAttribute("categoriaSelected", cate);
 		model.addAttribute("message", "Registro Creado");
 		model.put("categorias", cat);
 		return "learn/add :: formFragment";
@@ -319,14 +323,15 @@ public class LearnController {
 
 	@PostMapping("/ajax/buscar")
 	public String buscar(@RequestBody ObjetoComunDto objectoComunDto, ModelMap model) {
-        Boolean hasPersonalizadas = Boolean.valueOf(objectoComunDto.getValor1());
+		Boolean hasPersonalizadas = Boolean.valueOf(objectoComunDto.getValor1());
 		frasesList = frasesService.findByIdUsuarioAndFraseDesc(1, objectoComunDto.getValor().toUpperCase());
 		int total = frasesList.size();
-		
+
 		String checked = "false";
-		if(hasPersonalizadas) {
+		if (hasPersonalizadas) {
 			checked = "true";
-			frasesList = frasesList.stream().filter(f->f.getEstado() != null && f.getEstado().equals("PERSONALIZADO")).collect(Collectors.toList());
+			frasesList = frasesList.stream().filter(f -> f.getEstado() != null && f.getEstado().equals("PERSONALIZADO"))
+					.collect(Collectors.toList());
 			total = frasesList.size();
 		}
 

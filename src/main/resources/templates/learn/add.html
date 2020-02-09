@@ -20,6 +20,7 @@
 					<div class="form-group">
 						<label for="catId" class="text-primary">Categorias</label> <select
 							class="form-control form-control-lg" id="catId">
+							<option th:if="${categoriaSelected}" th:value="${categoriaSelected.id}" th:text="${categoriaSelected.categoria}"></option>
 							<option th:each="cat,iter : ${categorias}"
 								th:text="${cat.categoria}" th:value="${cat.id}"></option>
 						</select>
