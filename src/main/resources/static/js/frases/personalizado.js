@@ -52,14 +52,14 @@ var frasesJs = (function() {
 		keyPressEscritura : function() {
 			var frase = $("#f_0").text().trim().toLowerCase();
 			var escritura = $("#escritura").val().trim().toLowerCase();
-			
+
 			if (escritura == frase) {
 				$("#escritura").addClass("is-valid");
+				$("#resultado").html('<span class="badge badge-success">(Correcto)</span>');
 			} else {
 				$("#escritura").removeClass("is-valid");
+				$("#resultado").html("");
 			}
-			// alert($("#escritura").val());
-			// alert();
 		}
 	};
 }());
