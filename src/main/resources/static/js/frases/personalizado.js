@@ -51,16 +51,18 @@ var frasesJs = (function() {
 		},
 		keyPressEscritura : function() {
 			var frase = $("#f_0").text().trim().toLowerCase();
-			var punto=frase.substring(frase.length, frase.length-1);
-			if(punto=="."){
-				frase = frase.substring(0, frase.length-1);
+			var punto = frase.substring(frase.length, frase.length - 1);
+			var fraseSinPunto = frase;
+			if (punto == ".") {
+				fraseSinPunto = frase.substring(0, frase.length - 1);
 			}
-			//alert(frase);
+
 			var escritura = $("#escritura").val().trim().toLowerCase();
 
-			if (escritura == frase) {
+			if (escritura == frase || escritura == fraseSinPunto) {
 				$("#escritura").addClass("is-valid");
-				$("#resultado").html('<span class="badge badge-success">(Correcto)</span>');
+				$("#resultado").html(
+						'<span class="badge badge-success">(Correcto)</span>');
 			} else {
 				$("#escritura").removeClass("is-valid");
 				$("#resultado").html("");
