@@ -1,42 +1,42 @@
 var CONTENEDOR_FORM = "#contenedorForm";
-var frasesJs = (function(){
-	//var ctx = "${pageContext.request.contextPath}"
+var frasesJs = (function() {
+	// var ctx = "${pageContext.request.contextPath}"
 	var urlBase = '/personalizado';
 	return {
-		agregar: function () {			
+		agregar : function() {
 			$("#pagoAutomaticoModalForm").load(urlBase + "/ajax/agregar",
-				function (response) {
-				console.log(response);
-			});			
+					function(response) {
+						console.log(response);
+					});
 		},
-		guardarNo: function (idForm) {
+		guardarNo : function(idForm) {
 			$("#contenedorBtns").hide();
 			$("#loading").show();
-			$("#contenido").load(urlBase + "/ajax/guardar/no/"+idForm,
-				function (response, status, xhr) {		
-				if ( status == "error" ) {
-				    var msg = "Lo sentimos ocurrio un error: ";
-				    alert( msg + xhr.status + " " + xhr.statusText );
-				    $("#contenedorBtns").show();
-				}
-				$("#loading").hide();
-				console.log(response);
-			});			
+			$("#contenido").load(urlBase + "/ajax/guardar/no/" + idForm,
+					function(response, status, xhr) {
+						if (status == "error") {
+							var msg = "Lo sentimos ocurrio un error: ";
+							alert(msg + xhr.status + " " + xhr.statusText);
+							$("#contenedorBtns").show();
+						}
+						$("#loading").hide();
+						console.log(response);
+					});
 		},
 		guardar : function(idForm) {
 			$("#contenedorBtns").hide();
-		    $("#loading").show();
-			$("#contenido").load(urlBase + "/ajax/guardar/"+idForm,
-					function (response,status, xhr) {
-				    if ( status == "error" ) {
-				       var msg = "Lo sentimos ocurrio un error: ";
-				       alert( msg + xhr.status + " " + xhr.statusText );
-				       $("#contenedorBtns").show();
-				    }
-			        $("#loading").hide();
-					console.log(response);
-				});
-			
+			$("#loading").show();
+			$("#contenido").load(urlBase + "/ajax/guardar/" + idForm,
+					function(response, status, xhr) {
+						if (status == "error") {
+							var msg = "Lo sentimos ocurrio un error: ";
+							alert(msg + xhr.status + " " + xhr.statusText);
+							$("#contenedorBtns").show();
+						}
+						$("#loading").hide();
+						console.log(response);
+					});
+
 		},
 		mostrarTraduccion : function() {
 			$("#contenedorBtnMostrarTraduccion").hide();
@@ -48,13 +48,17 @@ var frasesJs = (function(){
 			$("#loading2").show();
 			$("#btnsPracticar").hide();
 		},
-		validarForm : function() {
-			var form = $(CONTENEDOR_FORM)[0];
-			if (form.checkValidity() === false) {
-				return false;
+		keyPressEscritura : function() {
+			var frase = $("#f_0").text().trim().toLowerCase();
+			var escritura = $("#escritura").val().trim().toLowerCase();
+			
+			if (escritura == frase) {
+				$("#escritura").addClass("is-valid");
 			} else {
-				return true;
+				$("#escritura").removeClass("is-valid");
 			}
-		} 
+			// alert($("#escritura").val());
+			// alert();
+		}
 	};
 }());

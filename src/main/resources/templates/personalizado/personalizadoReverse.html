@@ -26,7 +26,12 @@
 				<div class="card text-center" th:each="f,iter : ${frasesList}">
 					<div class="card-header">
 						<div th:each="t,iter : ${f.traduccionesList}">
-							<p th:text="${t.traduccion}" style="font-weight: bold; font-size: 33px;"></p>
+							<p th:text="${t.traduccion}"
+								style="font-weight: bold; font-size: 33px;"></p>
+						</div>
+						<div>							
+							<input onkeyup="frasesJs.keyPressEscritura()" type="text" class="form-control" id="escritura">
+<!-- 							<input type="text" class="form-control is-valid" id="escritura"> -->
 						</div>
 					</div>
 					<div class="card-body">
@@ -36,8 +41,7 @@
 						</h5>
 						<div class="card-text">
 							<div id="traduccionesList" style="display: none">
-								<span th:text="${f.frase}"
-									style="margin: 0; font-size: 20px"></span>
+								<span th:text="${f.frase}" style="margin: 0; font-size: 20px" id="f_0"></span>
 							</div>
 							<div id="contenedorBtnMostrarTraduccion">
 								<button type="button"
@@ -70,8 +74,9 @@
 					<h4 class="alert-heading">Well done!</h4>
 					<p>Pr&aacute;ctica completada!</p>
 					<hr>
-					<a class="btn btn-primary btn-lg" th:href="@{/personalizado/personalizado/e}"
-						role="button">Continuar practicando</a>
+					<a class="btn btn-primary btn-lg"
+						th:href="@{/personalizado/personalizado/e}" role="button">Continuar
+						practicando</a>
 				</div>
 			</div>
 		</div>
