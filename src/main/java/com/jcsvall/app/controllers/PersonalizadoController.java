@@ -147,4 +147,29 @@ public class PersonalizadoController {
 	public String selectIdioma() {		
 		return "personalizado/selectIdioma";
 	}
+	
+	@RequestMapping(value = "/ajax/aprendida/{id}")
+	public String aprendida(@PathVariable("id") Integer id, ModelMap model) {
+		model.addAttribute("finalizado", false);
+		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
+		if (frase != null) {
+			frasesList.remove(frase);
+			frase.setEstado(Constantes.REVISADO);
+			frasesService.save(frase);
+		}
+		calculoBarraProgress(model, frasesList);
+		List<Frases> fraseOne = new ArrayList<>();
+		if (!frasesList.isEmpty()) {
+			fraseOne.add(frasesList.get(0));
+		} else {
+			model.addAttribute("finalizado", true);
+		}
+		model.put("frasesList", fraseOne);
+
+		if (esReverse) {
+			return "personalizado/personalizadoReverse :: accordionFragment";
+		}
+		return "personalizado/personalizado :: accordionFragment";
+	}
+	
 }

@@ -25,12 +25,18 @@
 				</div>
 				<div class="card text-center" th:each="f,iter : ${frasesList}">
 					<div class="card-header">
+						<div style="text-align: right;">
+							<button type="button"
+								th:onclick="'frasesJs.aprendido('+${f.id}+')'"
+								class="btn btn-outline-success btn-sm">Quitar</button>
+						</div>
 						<div th:each="t,iter : ${f.traduccionesList}">
 							<p th:text="${t.traduccion}"
 								style="font-weight: bold; font-size: 33px;"></p>
 						</div>
-						<div>							
-							<input type="text" class="form-control" id="escritura" onkeyup="frasesJs.keyPressEscritura()">
+						<div>
+							<input type="text" class="form-control" id="escritura"
+								onkeyup="frasesJs.keyPressEscritura()">
 							<div id="resultado"></div>
 						</div>
 					</div>
@@ -41,7 +47,8 @@
 						</h5>
 						<div class="card-text">
 							<div id="traduccionesList" style="display: none">
-								<span th:text="${f.frase}" style="margin: 0; font-size: 20px" id="f_0"></span>
+								<span th:text="${f.frase}" style="margin: 0; font-size: 20px"
+									id="f_0"></span>
 							</div>
 							<div id="contenedorBtnMostrarTraduccion">
 								<button type="button"

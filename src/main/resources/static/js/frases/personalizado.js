@@ -67,6 +67,21 @@ var frasesJs = (function() {
 				$("#escritura").removeClass("is-valid");
 				$("#resultado").html("");
 			}
+		},
+		aprendido : function(idForm) {
+			$("#contenedorBtns").hide();
+			$("#loading").show();
+			$("#contenido").load(urlBase + "/ajax/aprendida/" + idForm,
+					function(response, status, xhr) {
+						if (status == "error") {
+							var msg = "Lo sentimos ocurrio un error: ";
+							alert(msg + xhr.status + " " + xhr.statusText);
+							$("#contenedorBtns").show();
+						}
+						$("#loading").hide();
+						console.log(response);
+					});
+
 		}
 	};
 }());
