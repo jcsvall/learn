@@ -353,6 +353,7 @@ public class LearnController {
 
 			}
 			frasesList = frasesPorCat;
+			total = frasesList.size();
 		}
 
 		String checked = "false";
