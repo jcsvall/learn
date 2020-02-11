@@ -1,3 +1,12 @@
+$(document).ready(function() {
+	$('input[type="checkbox"]').change(function(event) {
+		if (this.checked) {
+			$(this).addClass("is-valid");
+		} else {
+			$(this).removeClass("is-valid");
+		}
+	});
+});
 var frasesListJs = (function() {
 	var urlBase = '/learn';
 	return {
