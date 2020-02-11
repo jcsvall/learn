@@ -343,18 +343,16 @@ public class LearnController {
 			String[] catsId = objectoComunDto.getValor2().split(",");
 			for (String id : catsId) {
 				Integer idCat = Integer.parseInt(id);
-				Frases fr = frasesList.stream()
+				
+				List<Frases> frs = frasesList.stream()
 						.filter(f -> f.getIdCategorias().getId() != null && f.getIdCategorias().getId() == idCat)
-						.findFirst().orElse(null);
-				if (fr != null) {
-					frasesPorCat.add(fr);
-				}
+						.collect(Collectors.toList());
+				
+				frasesPorCat.addAll(frs);
 				categoriaCheckedList.add(idCat);
 
 			}
-			//if (!frasesPorCat.isEmpty()) {
-				frasesList = frasesPorCat;
-			//}
+			frasesList = frasesPorCat;
 		}
 
 		String checked = "false";
@@ -370,15 +368,16 @@ public class LearnController {
 
 		List<CategoriaCheckedPojo> ccpList = new ArrayList<>();
 		for (Categorias cate : cat) {
-			//Categorias cate = cat.stream().filter(c -> c.getId() == catCheckId).findFirst().orElse(null);
+			// Categorias cate = cat.stream().filter(c -> c.getId() ==
+			// catCheckId).findFirst().orElse(null);
 			CategoriaCheckedPojo ccp = new CategoriaCheckedPojo();
 			ccp.setCategoria(cate);
 			ccp.setChecked("false");
 			ccpList.add(ccp);
 		}
-		for(Integer catCheckId:categoriaCheckedList) {
-			for(CategoriaCheckedPojo ccp:ccpList) {
-				if(ccp.getCategoria().getId()==catCheckId) {
+		for (Integer catCheckId : categoriaCheckedList) {
+			for (CategoriaCheckedPojo ccp : ccpList) {
+				if (ccp.getCategoria().getId() == catCheckId) {
 					ccp.setChecked("true");
 				}
 			}
