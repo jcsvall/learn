@@ -25,6 +25,7 @@ import com.jcsvall.app.dtos.ObjetoComunDto;
 import com.jcsvall.app.entities.Categorias;
 import com.jcsvall.app.entities.Frases;
 import com.jcsvall.app.entities.Traducciones;
+import com.jcsvall.app.pojos.CategoriaCheckedPojo;
 import com.jcsvall.app.services.CategoriasService;
 import com.jcsvall.app.services.FrasesService;
 import com.jcsvall.app.utils.Constantes;
@@ -256,6 +257,15 @@ public class LearnController {
 		List<Categorias> cat = categoriasService.findAll();
 		model.put("categorias", cat);
 
+		List<CategoriaCheckedPojo> ccpList = new ArrayList<>();
+		for (Categorias cate : cat) {
+			CategoriaCheckedPojo ccp = new CategoriaCheckedPojo();
+			ccp.setCategoria(cate);
+			ccp.setChecked("false");
+			ccpList.add(ccp);
+		}
+		model.put("categoriasCheck", ccpList);
+
 		model.put("frasesList", frasesList);
 		model.addAttribute("fraseTotal", total);
 		// calculoBarraProgress(model, frasesList);
@@ -327,6 +337,26 @@ public class LearnController {
 		frasesList = frasesService.findByIdUsuarioAndFraseDesc(1, objectoComunDto.getValor().toUpperCase());
 		int total = frasesList.size();
 
+		List<Integer> categoriaCheckedList = new ArrayList<>();
+		if (objectoComunDto.getValor2() != null && !objectoComunDto.getValor2().isEmpty()) {
+			List<Frases> frasesPorCat = new ArrayList<>();
+			String[] catsId = objectoComunDto.getValor2().split(",");
+			for (String id : catsId) {
+				Integer idCat = Integer.parseInt(id);
+				Frases fr = frasesList.stream()
+						.filter(f -> f.getIdCategorias().getId() != null && f.getIdCategorias().getId() == idCat)
+						.findFirst().orElse(null);
+				if (fr != null) {
+					frasesPorCat.add(fr);
+				}
+				categoriaCheckedList.add(idCat);
+
+			}
+			//if (!frasesPorCat.isEmpty()) {
+				frasesList = frasesPorCat;
+			//}
+		}
+
 		String checked = "false";
 		if (hasPersonalizadas) {
 			checked = "true";
@@ -337,6 +367,23 @@ public class LearnController {
 
 		List<Categorias> cat = categoriasService.findAll();
 		model.put("categorias", cat);
+
+		List<CategoriaCheckedPojo> ccpList = new ArrayList<>();
+		for (Categorias cate : cat) {
+			//Categorias cate = cat.stream().filter(c -> c.getId() == catCheckId).findFirst().orElse(null);
+			CategoriaCheckedPojo ccp = new CategoriaCheckedPojo();
+			ccp.setCategoria(cate);
+			ccp.setChecked("false");
+			ccpList.add(ccp);
+		}
+		for(Integer catCheckId:categoriaCheckedList) {
+			for(CategoriaCheckedPojo ccp:ccpList) {
+				if(ccp.getCategoria().getId()==catCheckId) {
+					ccp.setChecked("true");
+				}
+			}
+		}
+		model.put("categoriasCheck", ccpList);
 
 		model.put("frasesList", frasesList);
 		model.addAttribute("fraseTotal", total);

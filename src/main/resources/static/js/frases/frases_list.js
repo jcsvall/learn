@@ -107,10 +107,22 @@ var frasesListJs = (function() {
 			ObjetoComunDto.valor = $("#buscarTxt").val();
 
 			if ($("#perCheck").is(':checked')) {
-				ObjetoComunDto.valor1 = "true";				
+				ObjetoComunDto.valor1 = "true";
 			} else {
-				ObjetoComunDto.valor1 = "false";				
+				ObjetoComunDto.valor1 = "false";
 			}
+
+			var categoriasId = "";
+			$('.custom-control-input:checked').each(function() {
+				if ($(this).val() != "PERSONALIZADO") {
+					categoriasId += $(this).val() + ",";
+				}
+			});
+			if (categoriasId != "") {
+				categoriasId = categoriasId.substring(0,
+						categoriasId.length - 1);
+			}
+			ObjetoComunDto.valor2 = categoriasId;
 
 			$('#contenido').html(
 					$utilJS.ajax("POST", urlBase + "/ajax/buscar",

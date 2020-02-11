@@ -23,16 +23,16 @@
 							<form class="was-validated">
 								<div class="custom-control custom-checkbox mb-3">
 									<input type="checkbox" class="custom-control-input"
-										id="perCheck" th:checked="${checked}" required> <label
+										id="perCheck" th:checked="${checked}" required value="PERSONALIZADO"> <label
 										class="custom-control-label" for="perCheck">En
 										pr&aacute;cticas personalizadas</label>
 								</div>
-								<div th:each="c,iter : ${categorias}"
+								<div th:each="cc,iter : ${categoriasCheck}"
 									class="custom-control custom-checkbox mb-3">
 									<input type="checkbox" class="custom-control-input"
-										th:id="'c_'+${iter.index}" required> <label
-										class="custom-control-label" th:for="'c_'+${iter.index}"
-										th:text="${c.categoria}"></label>
+										th:id="'cc_'+${iter.index}" th:value="${cc.categoria.id}" th:checked="${cc.checked}" required> <label
+										class="custom-control-label" th:for="'cc_'+${iter.index}"
+										th:text="${cc.categoria.categoria}"></label>
 								</div>
 							</form>
 						</div>
@@ -53,7 +53,7 @@
 						<p th:text="${t.traduccion}" style="margin: 0"></p>
 					</div>
 				</div>
-				<div class="overflow-auto" style="height: 390px">
+<!-- 				<div class="overflow-auto" style="height: 390px"> -->
 				<div class="card text-center" th:each="f,iter : ${frasesList}"
 					style="margin-top: 10px;">
 					<div class="card-header">
@@ -218,7 +218,8 @@
 						</div>
 
 					</div>
-				</div></div>
+				</div>
+<!-- 				</div> -->
 			</div>
 		</div>
 
