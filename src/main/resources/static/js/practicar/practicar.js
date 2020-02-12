@@ -42,44 +42,60 @@ var frasesJs = (function() {
 			var categoriasId = "";
 			var categoriasHTML = "";
 			var count = 0;
-			$('.custom-control-input:checked').each(function() {
-				var id = $(this).val();
-				var labelText = $("#lab_" + id).text();				
-				var classCss="light";//success
-					
-				if(count==1){
-					classCss="info";//primary
-				}
-                if(count==2){
-                	classCss="secondary";
-				}
-				
-				if (id != "todos") {
-					categoriasId += id + ",";
-					var completeClass = "badge badge-"+classCss;
-					categoriasHTML += '<span class="'+completeClass+'" style="margin-left:2px">'+labelText+'</span>';
-					//categoriasHTML += '<li class="list-group-item">'+labelText+'</li>';
-				}else{
-					count = -1;
-				}
-				
-				if(count==2){
-					count=-1;
-				}
-				
-				count++;
-				
-			});
+			$('.custom-control-input:checked').each(
+					function() {
+						var id = $(this).val();
+						var labelText = $("#lab_" + id).text();
+						var classCss = "light";// success
+
+						if (count == 1) {
+							classCss = "info";// primary
+						}
+						if (count == 2) {
+							classCss = "secondary";
+						}
+
+						if (id != "todos") {
+							categoriasId += id + ",";
+							var completeClass = "badge badge-" + classCss;
+							categoriasHTML += '<span class="' + completeClass
+									+ '" style="margin-left:2px">' + labelText
+									+ '</span>';
+							// categoriasHTML += '<li
+							// class="list-group-item">'+labelText+'</li>';
+						} else {
+							count = -1;
+						}
+
+						if (count == 2) {
+							count = -1;
+						}
+
+						count++;
+
+					});
 			if (categoriasId != "") {
 				categoriasId = categoriasId.substring(0,
 						categoriasId.length - 1);
 			}
 			ObjetoComunDto.valor = categoriasId;
 			$("#catSelected").html(categoriasHTML);
+			frasesJs.getFrasesCategoria();
 		},
-		getFrasesCategoria:function(){
+		getFrasesCategoria : function() {
 			$('#contenido').html(
-					$utilJS.ajax("POST", urlBase + "/ajax/frases", ObjetoComunDto));
+					$utilJS.ajax("POST", urlBase + "/ajax/frases",
+							ObjetoComunDto));
 		}
 	};
 }());
+
+function mostrarTraduccion(fid) {
+	var data = '';
+	var listaId = "ul_" + fid;
+	$("#" + listaId + " li").each(function() {
+		data += '<a href="#" class="list-group-item list-group-item-action">' + $(this).text() + '</a>';
+		// alert($(this).text())
+	});
+	$("#dataModal").html(data);
+}

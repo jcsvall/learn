@@ -15,7 +15,8 @@
 					<div class="card-header">
 						<div>
 							<button type="button" class="btn btn-outline-light btn-sm"
-								data-toggle="modal" data-target="#filtroDialog">Categorias</button>
+								data-toggle="modal" data-target="#filtroDialog">Seleccionar
+								Categorias</button>
 						</div>
 					</div>
 
@@ -63,17 +64,17 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-primary"
-											data-dismiss="modal" onclick="frasesJs.realizarPractica()">Aplicar</button>
+											data-dismiss="modal" onclick="frasesJs.realizarPractica()">Aceptar</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div id="catSelected"></div>
-						<div>
-							<button class="btn btn-primary btn-lg" style="margin-top: 5px"
-								type="button" id="procesar"
-								onclick="frasesJs.getFrasesCategoria()">Process</button>
-						</div>
+						<!-- 						<div> -->
+						<!-- 							<button class="btn btn-primary btn-lg" style="margin-top: 5px" -->
+						<!-- 								type="button" id="procesar" -->
+						<!-- 								onclick="frasesJs.getFrasesCategoria()">Process</button> -->
+						<!-- 						</div> -->
 					</div>
 				</div>
 			</div>
@@ -83,7 +84,43 @@
 					<div class="list-group">
 						<button th:each="f,iter : ${frases}" type="button"
 							class="list-group-item list-group-item-action"
-							><span class="badge badge-dark badge-pill" style="margin-right: 5px" th:text="${iter.index+1}">14</span><span th:text="${f.frase}"></span></button>
+							data-toggle="modal" data-target="#traduccionModal"
+							th:onclick="'mostrarTraduccion('+${f.id}+')'">
+							<span class="badge badge-dark badge-pill"
+								style="margin-right: 5px" th:text="${iter.index+1}"></span> <span
+								th:text="${f.frase}" style="font-weight: bold; font-size: 20px"></span>
+							<div>
+								<span th:text="'('+${f.pronunciacion}+')'"
+									style="font-size: 11px; margin-left: 35px"></span>
+							</div>
+							<div style="display: none">
+								<ul th:id="'ul_'+${f.id}">
+									<li th:each="tr,iter : ${f.traduccionesList}"
+										th:text="${tr.traduccion}"></li>
+								</ul>
+							</div>
+						</button>
+						<!-- Modal -->
+						<div class="modal fade" id="traduccionModal" tabindex="-1"
+							role="dialog" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-body">
+										<div>
+											<span class="badge badge-primary">TRADUCCIONES</span>
+											<div id="dataModal" class="list-group" style="text-align: center;"></div>
+										</div>
+										<div style="margin-top: 5px;">
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">Close</button>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
