@@ -32,5 +32,7 @@ public interface FrasesService {
 	public abstract Frases update(FraseDto frase);
 
 	public abstract List<Frases> findByIdUsuarioAndFraseDesc(Integer id, String frase);
+	
+	public abstract List<Frases> findAllByIdUsuarioAndFechaUpdateAsc(Integer id);
 
 }

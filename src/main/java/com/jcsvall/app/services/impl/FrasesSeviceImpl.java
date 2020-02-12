@@ -183,4 +183,9 @@ public class FrasesSeviceImpl implements FrasesService {
 		return frasesRepository.findByIdUsuarioAndFraseDesc(id, frase);
 	}
 
+	@Override
+	public List<Frases> findAllByIdUsuarioAndFechaUpdateAsc(Integer id) {
+		return frasesRepository.findAllByIdUsuarioAndFechaUpdateAsc(id);
+	}
+
 }

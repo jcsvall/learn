@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{layouts/default}">
+<head>
+<title>Learn principal page</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-sm" id="contenido1">
+
+			<div id="encaId" th:fragment="encaFragment">
+				<div class="card text-white bg-dark mb-3"
+					style="max-width: 100%; margin-top: 1px">
+
+					<div class="card-header">
+						<div>
+							<button type="button" class="btn btn-outline-light btn-sm"
+								data-toggle="modal" data-target="#filtroDialog">Categorias</button>
+						</div>
+					</div>
+
+					<div class="card-body">
+
+						<!-- Dialogo filtros -->
+						<div class="modal fade" tabindex="-1" role="dialog"
+							id="filtroDialog" aria-labelledby="tt" aria-hidden="true">
+							<div
+								class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+								role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="tt" style="color: black">Categorias</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<table class="table table-hover">
+											<tbody>
+												<tr>
+													<td>
+														<div class="custom-control custom-checkbox mb-3">
+															<input type="checkbox" class="custom-control-input"
+																id="perCheck" required value="todos"> <label
+																class="custom-control-label" for="perCheck">Todos</label>
+														</div>
+													</td>
+												</tr>
+												<tr th:each="cc,iter : ${categorias}">
+													<td>
+														<div class="custom-control custom-checkbox mb-3">
+															<input type="checkbox" class="custom-control-input"
+																th:id="'cc_'+${iter.index}" th:value="${cc.id}" required>
+															<label class="custom-control-label"
+																th:for="'cc_'+${iter.index}" th:id="'lab_'+${cc.id}"
+																th:text="${cc.categoria}"></label>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary"
+											data-dismiss="modal" onclick="frasesJs.realizarPractica()">Aplicar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="catSelected"></div>
+						<div>
+							<button class="btn btn-primary btn-lg" style="margin-top: 5px"
+								type="button" id="procesar"
+								onclick="frasesJs.getFrasesCategoria()">Process</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="container" id="contenido">
+				<div id="conFragment" th:fragment="dimanicContectFragment">
+					<div class="list-group">
+						<button th:each="f,iter : ${frases}" type="button"
+							class="list-group-item list-group-item-action"
+							><span class="badge badge-dark badge-pill" style="margin-right: 5px" th:text="${iter.index+1}">14</span><span th:text="${f.frase}"></span></button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- js para eventos -->
+	<div layout:fragment="my_js">
+		<script th:src="@{/js/practicar/practicar.js}"></script>
+	</div>
+
+</body>
+</html>
