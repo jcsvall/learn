@@ -93,6 +93,14 @@ function quitarCaracteres(strToChange){
 	strToChange = strToChange.split(',').join('');
 	strToChange = strToChange.split('!').join('');
 	strToChange = strToChange.split('¡').join('');
+	strToChange = strToChange.split('’re').join('are');
+	strToChange = strToChange.split("'re").join('are');
+	strToChange = strToChange.split('’s').join('is');
+	strToChange = strToChange.split("'s").join('is');
+	strToChange = strToChange.split('’').join('');
+	strToChange = strToChange.split('-').join('');
+	strToChange = strToChange.split('_').join('');
+	strToChange = strToChange.split("'").join('');
 	strToChange = strToChange.split(' ').join('');
 	return strToChange;
 }
