@@ -65,6 +65,7 @@ var frasesJs = (function() {
 				$("#escritura").addClass("is-valid");
 				$("#resultado").html(
 						'<span class="badge badge-success">(Correcto)</span>');
+				frasesJs.mostrarTraduccion();
 			} else {
 				$("#escritura").removeClass("is-valid");
 				$("#resultado").html("");
