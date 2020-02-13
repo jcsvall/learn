@@ -56,8 +56,10 @@ var frasesJs = (function() {
 			if (punto == ".") {
 				fraseSinPunto = frase.substring(0, frase.length - 1);
 			}
+			
+			frase = quitarCaracteres(frase);
 
-			var escritura = $("#escritura").val().trim().toLowerCase();
+			var escritura = quitarCaracteres($("#escritura").val().trim().toLowerCase());
 
 			if (escritura == frase || escritura == fraseSinPunto) {
 				$("#escritura").addClass("is-valid");
@@ -85,3 +87,12 @@ var frasesJs = (function() {
 		}
 	};
 }());
+
+function quitarCaracteres(strToChange){
+	strToChange = strToChange.split('.').join('');
+	strToChange = strToChange.split(',').join('');
+	strToChange = strToChange.split('!').join('');
+	strToChange = strToChange.split('¡').join('');
+	strToChange = strToChange.split(' ').join('');
+	return strToChange;
+}
