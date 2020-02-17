@@ -197,3 +197,12 @@ function clickCheckTable(checkSelected) {
 		$(CLASE_COMUN).removeClass("is-valid");
 	}
 }
+
+function clickCheckOne(checkSelected) {
+	var CLASE_COMUN = ".checkTb";
+	if (checkSelected.checked) {
+		$(checkSelected).addClass("is-valid");
+	} else {
+		$(checkSelected).removeClass("is-valid");
+	}
+}
