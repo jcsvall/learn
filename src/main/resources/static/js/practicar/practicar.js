@@ -92,7 +92,7 @@ var frasesJs = (function() {
 	};
 }());
 
-function mostrarTraduccion(fid) {
+function mostrarTraduccionDialog(fid) {
 	var data = '';
 	var listaId = "ul_" + fid;
 	$("#" + listaId + " li")
