@@ -1,6 +1,8 @@
 package com.jcsvall.app.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +60,53 @@ public class PracticarController {
 			frasesList = frsList;
 		}
 		model.put("frases", frasesList);
+		model.addAttribute("lista", "lista");
 		return "practicar/practicar::dimanicContectFragment";
 	}
+
+	@RequestMapping("/ajax/practica")
+	public String getPracticando(ModelMap model) {
+		List<Frases> fraseOne = new ArrayList<>();
+		if (!frasesList.isEmpty()) {
+			Frases firs = frasesList.get(0);
+			fraseOne.add(firs);
+		}
+		model.put("frases", fraseOne);
+		model.addAttribute("practicaList", "practicaList");
+		return "practicar/practicar::dimanicContectFragment";
+	}
+
+	@RequestMapping(value = "/ajax/guardar/{id}")
+	public String updateSi(@PathVariable("id") Integer id, ModelMap model) {
+		model.addAttribute("finalizado", false);
+		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
+		if (frase != null) {
+			frasesList.remove(frase);
+		}
+		// calculoBarraProgress(model, frasesList);
+		List<Frases> fraseOne = new ArrayList<>();
+		if (!frasesList.isEmpty()) {
+			fraseOne.add(frasesList.get(0));
+		} else {
+			model.addAttribute("finalizado", true);
+		}
+		model.put("frases", fraseOne);
+		model.addAttribute("practicaList", "practicaList");
+		return "practicar/practicar::dimanicContectFragment";
+	}
+	
+	@RequestMapping(value = "/ajax/guardar/no/{id}")
+	public String updateNo(@PathVariable("id") Integer id, ModelMap model) {
+		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
+		if (frase != null) {
+			frasesList.remove(frase);
+			frasesList.add(frase);
+		}
+		//calculoBarraProgress(model, frasesList);
+		List<Frases> fraseOne = Arrays.asList(frasesList.get(0));
+		model.put("frases", fraseOne);		
+		model.addAttribute("practicaList", "practicaList");
+		return "practicar/practicar::dimanicContectFragment";
+	}
+
 }

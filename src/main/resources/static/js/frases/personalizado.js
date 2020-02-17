@@ -102,6 +102,8 @@ function quitarCaracteres(strToChange){
 	strToChange = strToChange.split('-').join('');
 	strToChange = strToChange.split('_').join('');
 	strToChange = strToChange.split("'").join('');
+	strToChange = strToChange.split("don't").join('do not');
+	strToChange = strToChange.split("okay").join('ok');
 	strToChange = strToChange.split(' ').join('');
 	return strToChange;
 }
