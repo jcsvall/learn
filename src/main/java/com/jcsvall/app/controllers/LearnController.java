@@ -25,9 +25,11 @@ import com.jcsvall.app.dtos.ObjetoComunDto;
 import com.jcsvall.app.entities.Categorias;
 import com.jcsvall.app.entities.Frases;
 import com.jcsvall.app.entities.Traducciones;
+import com.jcsvall.app.entities.Usuarios;
 import com.jcsvall.app.pojos.CategoriaCheckedPojo;
 import com.jcsvall.app.services.CategoriasService;
 import com.jcsvall.app.services.FrasesService;
+import com.jcsvall.app.services.UsuariosService;
 import com.jcsvall.app.utils.Constantes;
 
 @Controller
@@ -41,7 +43,12 @@ public class LearnController {
 	@Autowired
 	@Qualifier("categoriasService")
 	private CategoriasService categoriasService;
+	
+	@Autowired
+	@Qualifier("usuariosService")
+	private UsuariosService usuariosService;
 
+	private Usuarios us;
 	private List<Frases> frasesList;
 	private List<Frases> frasesListToReverse;
 
@@ -57,8 +64,9 @@ public class LearnController {
 
 	@RequestMapping("/frases")
 	public String frases(ModelMap model) {
+		us = usuariosService.getUsuarioLogeado();
 		esReverse = false;
-		List<Frases> frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, "REVISANDO");
+		List<Frases> frasesPendientes = frasesService.finDByIdUsuarioAndEstado(us.getId(), "REVISANDO");
 		totalFrasesPendientes = frasesPendientes.size();
 
 		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
@@ -219,7 +227,7 @@ public class LearnController {
 	public String frasesReverse(ModelMap model) {
 		esReverse = true;
 		List<Frases> frasesPendientes = new ArrayList<>();
-		frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, "REVISANDO");
+		frasesPendientes = frasesService.finDByIdUsuarioAndEstado(us.getId(), "REVISANDO");
 		if (frasesListToReverse != null && !frasesListToReverse.isEmpty() && frasesPendientes.isEmpty()) {
 			frasesPendientes = frasesService.save(frasesListToReverse);
 		}
@@ -251,7 +259,7 @@ public class LearnController {
 	@RequestMapping("/frases_lista")
 	public String frasesList(ModelMap model) {
 
-		frasesList = frasesService.findByUsuariosDesc(1);
+		frasesList = frasesService.findByUsuariosDesc(us.getId());
 		int total = frasesList.size();
 
 		List<Categorias> cat = categoriasService.findAll();
@@ -276,7 +284,7 @@ public class LearnController {
 	@RequestMapping(value = "/ajax/personalizar/{id}/{accion}")
 	public String personalizar(@PathVariable("id") Integer id, @PathVariable("accion") Integer accion, ModelMap model) {
 		String estado = Constantes.PERSONALIZADO;
-		Integer cantidad = frasesService.findCountByIdUsuarioAndEstado(1, estado) + 1;
+		Integer cantidad = frasesService.findCountByIdUsuarioAndEstado(us.getId(), estado) + 1;
 
 		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
 

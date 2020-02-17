@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jcsvall.app.entities.Frases;
+import com.jcsvall.app.entities.Usuarios;
 import com.jcsvall.app.services.FrasesService;
+import com.jcsvall.app.services.UsuariosService;
 import com.jcsvall.app.utils.Constantes;
 
 @Controller
@@ -23,6 +25,11 @@ public class PersonalizadoController {
 	@Autowired
 	@Qualifier("frasesService")
 	private FrasesService frasesService;
+	@Autowired
+	@Qualifier("usuariosService")
+	private UsuariosService usuariosService;
+
+	private Usuarios us;
 	private List<Frases> frasesList;
 	private List<Frases> frasesListToReverse;
 	private int totalElementosIniciales;
@@ -36,7 +43,7 @@ public class PersonalizadoController {
 		}else {
 			esReverse = true;
 		}
-		List<Frases> frasesPendientes = frasesService.finDByIdUsuarioAndEstado(1, Constantes.PERSONALIZADO);
+		List<Frases> frasesPendientes = frasesService.finDByIdUsuarioAndEstado(us.getId(), Constantes.PERSONALIZADO);
 		frasesPendientes.sort((f1, f2) -> f1.getOrdenPersonal().compareTo(f2.getOrdenPersonal()));
 		totalFrasesPendientes = frasesPendientes.size();
 		frasesList = new ArrayList<>();
@@ -144,7 +151,8 @@ public class PersonalizadoController {
 	}
 	
 	@RequestMapping(value = "/select_idioma")
-	public String selectIdioma() {		
+	public String selectIdioma() {	
+		us = usuariosService.getUsuarioLogeado();
 		return "personalizado/selectIdioma";
 	}
 	

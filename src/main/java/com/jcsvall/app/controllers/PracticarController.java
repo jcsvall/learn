@@ -21,6 +21,7 @@ import com.jcsvall.app.entities.Frases;
 import com.jcsvall.app.entities.Usuarios;
 import com.jcsvall.app.services.CategoriasService;
 import com.jcsvall.app.services.FrasesService;
+import com.jcsvall.app.services.UsuariosService;
 
 @Controller
 @RequestMapping("/practicar")
@@ -32,13 +33,17 @@ public class PracticarController {
 	@Autowired
 	@Qualifier("categoriasService")
 	private CategoriasService categoriasService;
+	
+	@Autowired
+	@Qualifier("usuariosService")
+	private UsuariosService usuariosService;
 
 	private Usuarios us;
 	private List<Frases> frasesList;
 
 	@RequestMapping("/practicar")
 	public String practicar(ModelMap model) {
-		us = new Usuarios(1);
+		us = usuariosService.getUsuarioLogeado();
 		List<Categorias> cat = categoriasService.findAllByUsuario(us);
 		model.put("categorias", cat);
 		return "practicar/practicar";
