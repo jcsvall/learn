@@ -14,9 +14,9 @@
 
 					<div class="card-header">
 						<div>
-							<button id="cate" type="button" class="btn btn-outline-light btn-sm"
-								data-toggle="modal" data-target="#filtroDialog">Seleccionar
-								Categorias</button>
+							<button id="cate" type="button"
+								class="btn btn-outline-light btn-sm" data-toggle="modal"
+								data-target="#filtroDialog">Seleccionar Categorias</button>
 						</div>
 					</div>
 
@@ -51,7 +51,7 @@
 												<tr th:each="cc,iter : ${categorias}">
 													<td>
 														<div class="custom-control custom-checkbox mb-3">
-															<input type="checkbox" class="custom-control-input"
+															<input type="checkbox" class="custom-control-input-dl custom-control-input"
 																th:id="'cc_'+${iter.index}" th:value="${cc.id}" required>
 															<label class="custom-control-label"
 																th:for="'cc_'+${iter.index}" th:id="'lab_'+${cc.id}"
@@ -83,27 +83,65 @@
 				<div id="conFragment" th:fragment="dimanicContectFragment">
 					<div class="list-group" th:if="${lista}">
 						<div id="btnsPractica" style="margin-bottom: 3px">
-							<button class="btn btn-primary btn-lg" type="button" onclick="comenzar()">
-								Pr&aacute;cticar las siguientes frases</button>
+							<button class="btn btn-primary btn-lg" type="button"
+								onclick="comenzar()">Pr&aacute;cticar las siguientes
+								frases</button>
 						</div>
-						<button th:each="f,iter : ${frases}" type="button"
-							class="list-group-item list-group-item-action"
-							data-toggle="modal" data-target="#traduccionModal"
-							th:onclick="'mostrarTraduccionDialog('+${f.id}+')'">
-							<span class="badge badge-dark badge-pill"
-								style="margin-right: 5px" th:text="${iter.index+1}"></span> <span
-								th:text="${f.frase}" style="font-weight: bold; font-size: 20px"></span>
-							<div>
-								<span th:text="'('+${f.pronunciacion}+')'"
-									style="font-size: 11px; margin-left: 35px"></span>
-							</div>
-							<div style="display: none">
-								<ul th:id="'ul_'+${f.id}">
-									<li th:each="tr,iter : ${f.traduccionesList}"
-										th:text="${tr.traduccion}"></li>
-								</ul>
-							</div>
-						</button>
+						<!-- 						<button th:each="f,iter : ${frases}" type="button" -->
+						<!-- 							class="list-group-item list-group-item-action" -->
+						<!-- 							data-toggle="modal" data-target="#traduccionModal" -->
+						<!-- 							th:onclick="'mostrarTraduccionDialog('+${f.id}+')'"> -->
+						<!-- 							<span class="badge badge-dark badge-pill" -->
+						<!-- 								style="margin-right: 5px" th:text="${iter.index+1}"></span> <span -->
+						<!-- 								th:text="${f.frase}" style="font-weight: bold; font-size: 20px"></span> -->
+						<!-- 							<div> -->
+						<!-- 								<span th:text="'('+${f.pronunciacion}+')'" -->
+						<!-- 									style="font-size: 11px; margin-left: 35px"></span> -->
+						<!-- 							</div> -->
+						<!-- 							<div style="display: none"> -->
+						<!-- 								<ul th:id="'ul_'+${f.id}"> -->
+						<!-- 									<li th:each="tr,iter : ${f.traduccionesList}" -->
+						<!-- 										th:text="${tr.traduccion}"></li> -->
+						<!-- 								</ul> -->
+						<!-- 							</div> -->
+						<!-- 						</button> -->
+
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th scope="col">&nbsp;</th>
+									<th scope="col"><input type="checkbox" class="custom-control-input"
+																id="checkTable" onclick="clickCheckTable(this)"> <label
+																class="custom-control-label" for="checkTable">[select all]</label></th>
+									<!-- 									<th scope="col">frase</th> -->
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="f,iter : ${frases}">
+									<td scope="row"><span class="badge badge-dark badge-pill"
+										style="margin-right: 5px" th:text="${iter.index+1}"></span> </d>
+<!-- 									<td>checkicon</td> -->
+									<td><input type="checkbox" class="checkTb custom-control-input"
+										th:id="'ch_'+${iter.index}" required th:value="${f.id}"><label
+										class="custom-control-label" th:for="'ch_'+${iter.index}"
+										th:text="${f.frase}"
+										style="font-weight: bold; font-size: 20px"></label>
+										<div>
+											<span th:text="'('+${f.pronunciacion}+')'"
+												style="font-size: 11px; margin-left: 10px"></span>
+										</div>
+										<div style="display: none">
+											<ul th:id="'ul_'+${f.id}">
+												<li th:each="tr,iter : ${f.traduccionesList}"
+													th:text="${tr.traduccion}"></li>
+											</ul>
+										</div></td>
+									<td><button class="btn btn-dark btn-sm" type="button"
+											data-toggle="modal" data-target="#traduccionModal"
+											th:onclick="'mostrarTraduccionDialog('+${f.id}+')'">Traducci&oacute;n</button></td>
+								</tr>
+							</tbody>
+						</table>
 						<!-- Modal -->
 						<div class="modal fade" id="traduccionModal" tabindex="-1"
 							role="dialog" aria-labelledby="exampleModalLabel"

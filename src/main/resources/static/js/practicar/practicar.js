@@ -6,7 +6,7 @@ function init() {
 	$('input[type="checkbox"]').change(function(event) {
 
 		var valor = $(this).val();
-		var CLASE_COMUN = ".custom-control-input";
+		var CLASE_COMUN = ".custom-control-input-dl";
 		if (this.checked) {
 			$(this).addClass("is-valid");
 			if (valor == "todos") {
@@ -22,7 +22,7 @@ function init() {
 		}
 
 	});
-	frasesJs.getFrasesCategoria();
+	// frasesJs.getFrasesCategoria();
 }
 var frasesJs = (function() {
 	// var urlBase = '/practicar';
@@ -44,7 +44,7 @@ var frasesJs = (function() {
 			var categoriasId = "";
 			var categoriasHTML = "";
 			var count = 0;
-			$('.custom-control-input:checked').each(
+			$('.custom-control-input-dl:checked').each(
 					function() {
 						var id = $(this).val();
 						var labelText = $("#lab_" + id).text();
@@ -184,4 +184,16 @@ function quitarCaracteres(strToChange) {
 	strToChange = strToChange.split("okay").join('ok');
 	strToChange = strToChange.split(' ').join('');
 	return strToChange;
+}
+function clickCheckTable(checkSelected) {
+	var CLASE_COMUN = ".checkTb";
+	if (checkSelected.checked) {
+		$(checkSelected).addClass("is-valid");
+		$(CLASE_COMUN).prop("checked", true);
+		$(CLASE_COMUN).addClass("is-valid");
+	} else {
+		$(checkSelected).removeClass("is-valid");
+		$(CLASE_COMUN).prop("checked", false);
+		$(CLASE_COMUN).removeClass("is-valid");
+	}
 }

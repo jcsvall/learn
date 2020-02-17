@@ -82,6 +82,8 @@ public class PracticarController {
 		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
 		if (frase != null) {
 			frasesList.remove(frase);
+			frase.setFechaUpdate(new Date());
+			frasesService.save(frase);
 		}
 		// calculoBarraProgress(model, frasesList);
 		List<Frases> fraseOne = new ArrayList<>();
