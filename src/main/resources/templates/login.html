@@ -30,19 +30,33 @@
 		<div class="row">
 			<div class="col-sm"></div>
 			<div class="col-sm">
-				<div th:if="${param.error}">Invalid username and password.</div>
-				<div th:if="${param.logout}">You have been logged out.</div>
+				<div th:if="${param.error}" class="alert alert-danger" role="alert">
+					Usuario o contraseña incorrectos
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div th:if="${param.logout}" class="alert alert-success">
+					Ha salido del sistema
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 				<form th:action="@{/login}" method="post">
-					<div>
-						<label> User Name : <input type="text" name="username" />
-						</label>
+					<div class="form-group">
+						<label for="user" class="badge badge-success">Usuario</label> <input type="text"
+							class="form-control" id="user" placeholder="Usuario"
+							name="username">
 					</div>
-					<div>
-						<label> Password: <input type="password" name="password" />
-						</label>
+					<div class="form-group">
+						<label for="pw" class="badge badge-success">Contraseña</label> <input type="password"
+							class="form-control" id="pw" placeholder="Contraseña"
+							name="password">
 					</div>
-					<div>
-						<input type="submit" value="Sign In" />
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary" style="width: 100%">Ingresar</button>
 					</div>
 				</form>
 			</div>
