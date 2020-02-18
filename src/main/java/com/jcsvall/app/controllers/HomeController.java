@@ -9,6 +9,6 @@ public class HomeController {
 	@RequestMapping(value={"", "/", "learn"})
 	public String principal(ModelMap model) {
 		model.addAttribute("welcome", "Welcome ");
-		return "/learn/principal";
+		return "learn/principal";
 	}
 }
