@@ -59,7 +59,7 @@ public class LearnController {
 	@RequestMapping("/principal")
 	public String principal(ModelMap model) {
 		model.addAttribute("test", "Testing");
-		return "/learn/principal";
+		return "learn/principal";
 	}
 
 	@RequestMapping("/frases")

@@ -6,8 +6,9 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<p th:text="${welcome}"></p>
-				
+		<div class="alert alert-success" role="alert" style="text-align: center;margin-top: 25px">Bienvenido
+			[[${#httpServletRequest.remoteUser}]]!</div>
+
 	</div>
 </body>
 </html>
