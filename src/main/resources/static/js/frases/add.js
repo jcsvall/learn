@@ -25,6 +25,12 @@ var addJs = (function() {
 			var frase = addJs.crearObjeto();
 			// alert(JSON.stringify(frase));
 			if (frase.traduccionesList.length == 0 || frase.frase.trim() == "") {
+				$("#valId")
+						.html(
+								"Debe ingresar una frase y almenos	una traducci&oacute;n para poder guardar");
+				$('#validacionModal').modal('show');
+			} else if (frase.categoriaId == null) {
+				$("#valId").html("Debe ingresar una categoria para poder guardar");
 				$('#validacionModal').modal('show');
 			} else {
 				console.log(JSON.stringify(frase));

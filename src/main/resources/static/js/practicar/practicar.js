@@ -182,6 +182,7 @@ function quitarCaracteres(strToChange) {
 	strToChange = strToChange.split("'").join('');
 	strToChange = strToChange.split("don't").join('do not');
 	strToChange = strToChange.split("okay").join('ok');
+	strToChange = strToChange.split("'m").join('am');
 	strToChange = strToChange.split(' ').join('');
 	return strToChange;
 }

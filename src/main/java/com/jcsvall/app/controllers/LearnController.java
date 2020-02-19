@@ -69,7 +69,7 @@ public class LearnController {
 		List<Frases> frasesPendientes = frasesService.finDByIdUsuarioAndEstado(us.getId(), "REVISANDO");
 		totalFrasesPendientes = frasesPendientes.size();
 
-		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
+		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(us.getId());
 //		frasesListToReverse = new ArrayList<>();
 //		frasesListToReverse.addAll(frasesList);
 		totalElementosIniciales = frasesList.size();
@@ -160,7 +160,7 @@ public class LearnController {
 	@PostMapping("/ajax/crear")
 	public String crear(@RequestBody FraseDto frase, ModelMap model) {
 		Frases creado = frasesService.save(frase);
-		List<Categorias> cat = categoriasService.findAll();
+		List<Categorias> cat = categoriasService.findAllByUsuario(us);
 		Categorias cate = cat.stream().filter(c -> c.getId() == creado.getIdCategorias().getId()).findFirst()
 				.orElse(null);
 		cat.remove(cate);
@@ -177,7 +177,7 @@ public class LearnController {
 		frasesList = frasesService.findByUsuariosDesc(1);
 		int total = frasesList.size();
 
-		List<Categorias> cat = categoriasService.findAll();
+		List<Categorias> cat = categoriasService.findAllByUsuario(us);
 		model.put("categorias", cat);
 
 		model.put("frasesList", frasesList);
@@ -262,7 +262,7 @@ public class LearnController {
 		frasesList = frasesService.findByUsuariosDesc(us.getId());
 		int total = frasesList.size();
 
-		List<Categorias> cat = categoriasService.findAll();
+		List<Categorias> cat = categoriasService.findAllByUsuario(us);
 		model.put("categorias", cat);
 
 		List<CategoriaCheckedPojo> ccpList = new ArrayList<>();
@@ -318,7 +318,7 @@ public class LearnController {
 
 	@RequestMapping(value = "/ajax/accion/{tipo}")
 	public String addInit(@PathVariable("tipo") String tipo, ModelMap model) {
-		List<Categorias> cat = categoriasService.findAll();
+		List<Categorias> cat = categoriasService.findAllByUsuario(us);
 		model.put("categorias", cat);
 		return "learn/add :: formFragment";
 	}
@@ -372,7 +372,7 @@ public class LearnController {
 			total = frasesList.size();
 		}
 
-		List<Categorias> cat = categoriasService.findAll();
+		List<Categorias> cat = categoriasService.findAllByUsuario(us);
 		model.put("categorias", cat);
 
 		List<CategoriaCheckedPojo> ccpList = new ArrayList<>();

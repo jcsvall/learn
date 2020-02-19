@@ -16,6 +16,7 @@ import com.jcsvall.app.dtos.FraseDto;
 import com.jcsvall.app.entities.Categorias;
 import com.jcsvall.app.entities.Usuarios;
 import com.jcsvall.app.services.CategoriasService;
+import com.jcsvall.app.services.UsuariosService;
 
 @Controller
 @RequestMapping("/categorias")
@@ -23,12 +24,16 @@ public class CategoriaController {
 	@Autowired
 	@Qualifier("categoriasService")
 	private CategoriasService categoriasService;
+	
+	@Autowired
+	@Qualifier("usuariosService")
+	private UsuariosService usuariosService;
 
 	private Usuarios us;
 
 	@RequestMapping("/listado")
 	public String frases(ModelMap model) {
-		us = new Usuarios(1);
+		us = usuariosService.getUsuarioLogeado();
 		List<Categorias> catList = categoriasService.findAllByUsuario(us);
 		model.put("categorias", catList);
 		return "categorias/categorias";
