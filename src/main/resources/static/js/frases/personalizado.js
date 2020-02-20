@@ -107,3 +107,8 @@ function quitarCaracteres(strToChange){
 	strToChange = strToChange.split(' ').join('');
 	return strToChange;
 }
+
+function redirectLocation(language){
+	var idCat=$("#catId").val();
+	location.href = "/personalizado/personalizado/"+language+"/"+idCat;
+}

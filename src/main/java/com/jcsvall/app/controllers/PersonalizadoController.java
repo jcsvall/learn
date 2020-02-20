@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,8 +14,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jcsvall.app.entities.Categorias;
 import com.jcsvall.app.entities.Frases;
 import com.jcsvall.app.entities.Usuarios;
+import com.jcsvall.app.services.CategoriasService;
 import com.jcsvall.app.services.FrasesService;
 import com.jcsvall.app.services.UsuariosService;
 import com.jcsvall.app.utils.Constantes;
@@ -29,6 +32,10 @@ public class PersonalizadoController {
 	@Qualifier("usuariosService")
 	private UsuariosService usuariosService;
 
+	@Autowired
+	@Qualifier("categoriasService")
+	private CategoriasService categoriasService;
+
 	private Usuarios us;
 	private List<Frases> frasesList;
 	private List<Frases> frasesListToReverse;
@@ -36,14 +43,20 @@ public class PersonalizadoController {
 	private int totalFrasesPendientes;
 	private Boolean esReverse;
 
-	@RequestMapping("/personalizado/{idioma}")
-	public String personalizado(ModelMap model,@PathVariable("idioma") String idioma) {
-		if("i".equalsIgnoreCase(idioma)) {
-		esReverse = false;
-		}else {
+	@RequestMapping("/personalizado/{idioma}/{idCat}")
+	public String personalizado(ModelMap model, @PathVariable("idioma") String idioma,
+			@PathVariable("idCat") Integer idCat) {
+		if ("i".equalsIgnoreCase(idioma)) {
+			esReverse = false;
+		} else {
 			esReverse = true;
 		}
 		List<Frases> frasesPendientes = frasesService.finDByIdUsuarioAndEstado(us.getId(), Constantes.PERSONALIZADO);
+		if (idCat != 0) {
+			frasesPendientes = frasesPendientes.stream()
+					.filter(fp -> fp.getIdCategorias() != null && fp.getIdCategorias().getId() == idCat)
+					.collect(Collectors.toList());
+		}
 		frasesPendientes.sort((f1, f2) -> f1.getOrdenPersonal().compareTo(f2.getOrdenPersonal()));
 		totalFrasesPendientes = frasesPendientes.size();
 		frasesList = new ArrayList<>();
@@ -65,20 +78,20 @@ public class PersonalizadoController {
 		model.put("frasesListLazyInit", frasesList);
 		model.addAttribute("cssBarra", "progress-bar w-0");
 		model.addAttribute("porcentajeValue", "0");
-		
+
 		calculoBarraProgress(model, frasesList);
 		if (esReverse) {
 			return "personalizado/personalizadoReverse";
 		}
 		return "personalizado/personalizado";
 	}
-	
+
 	@RequestMapping(value = "/ajax/guardar/{id}")
 	public String updateSi(@PathVariable("id") Integer id, ModelMap model) {
 		model.addAttribute("finalizado", false);
 		Frases frase = frasesList.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
 		if (frase != null) {
-			frasesList.remove(frase);			
+			frasesList.remove(frase);
 		}
 		calculoBarraProgress(model, frasesList);
 		List<Frases> fraseOne = new ArrayList<>();
@@ -95,7 +108,6 @@ public class PersonalizadoController {
 		return "personalizado/personalizado :: accordionFragment";
 	}
 
-	
 	@RequestMapping(value = "/ajax/guardar/no/{id}")
 	public String updateNo(@PathVariable("id") Integer id, ModelMap model) {
 		System.out.println(id);
@@ -112,8 +124,7 @@ public class PersonalizadoController {
 		}
 		return "personalizado/personalizado :: accordionFragment";
 	}
-	
-	
+
 	private void calculoBarraProgress(ModelMap model, List<Frases> frasesList) {
 		String valor = "0";
 		double recordsTotales = totalElementosIniciales;
@@ -144,18 +155,31 @@ public class PersonalizadoController {
 		model.addAttribute("cssBarra", "progress-bar w-" + valor);
 		model.addAttribute("porcentajeValue", valor);
 	}
-	
+
 	private Double getWithTwoDecimals(Double value) {
 		DecimalFormat df = new DecimalFormat("#.00");
 		return Double.valueOf(df.format(value));
 	}
-	
+
 	@RequestMapping(value = "/select_idioma")
-	public String selectIdioma() {	
+	public String selectIdioma(ModelMap model) {
+		List<Categorias> catWithChildren = new ArrayList<>();
 		us = usuariosService.getUsuarioLogeado();
+		List<Categorias> cat = categoriasService.findAllByUsuario(us);
+		List<Frases> frasesPersonalizadas = frasesService.finDByIdUsuarioAndEstado(us.getId(),
+				Constantes.PERSONALIZADO);
+		for (Categorias c : cat) {
+			long cantidad = frasesPersonalizadas.stream()
+					.filter(ca -> ca.getIdCategorias() != null && ca.getIdCategorias().equals(c)).count();
+			if (cantidad > 0) {
+				c.setCategoria(c.getCategoria() + " (" + cantidad + ")");
+				catWithChildren.add(c);
+			}
+		}
+		model.put("categorias", catWithChildren);
 		return "personalizado/selectIdioma";
 	}
-	
+
 	@RequestMapping(value = "/ajax/aprendida/{id}")
 	public String aprendida(@PathVariable("id") Integer id, ModelMap model) {
 		model.addAttribute("finalizado", false);
@@ -179,5 +203,5 @@ public class PersonalizadoController {
 		}
 		return "personalizado/personalizado :: accordionFragment";
 	}
-	
+
 }

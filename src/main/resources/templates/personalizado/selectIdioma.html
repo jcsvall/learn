@@ -14,6 +14,7 @@
 	text-align: center !important;
 	font-size: 25px !important;
 	vertical-align: middle !important;
+	color: white !important;
 }
 
 .pad {
@@ -24,14 +25,23 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container-sm" id="contenido" style="padding-top: 25px;">
-			<div class="margen">
-				<a class="btn btn-primary btn-lg personalizado"
-					th:href="@{/personalizado/personalizado/i}" style="vertical-align: middle !important">Practicar
-						Ingl&eacute;s</a>
+			<div>
+				<label for="catId" class="text-primary">Categoria</label> <select
+					class="form-control form-control-lg text-success" id="catId">
+					<option value="0" class="text-success">Todo</option>
+					<option th:each="cat,iter : ${categorias}"
+						th:text="${cat.categoria}" th:value="${cat.id}" class="text-success"></option>
+				</select>
 			</div>
 			<div class="margen">
 				<a class="btn btn-primary btn-lg personalizado"
-					th:href="@{/personalizado/personalizado/e}"><span>Practicar
+					onclick="redirectLocation('i')"
+					style="vertical-align: middle !important">Practicar
+					Ingl&eacute;s</a>
+			</div>
+			<div class="margen">
+				<a class="btn btn-primary btn-lg personalizado"
+					onclick="redirectLocation('e')"><span>Practicar
 						Espa&ntilde;ol</span> </a>
 			</div>
 		</div>

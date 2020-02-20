@@ -152,6 +152,7 @@ public class LearnController {
 	// add
 	@RequestMapping("/add")
 	public String add(ModelMap model) {
+		us = usuariosService.getUsuarioLogeado();
 //		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
 		// model.put("frasesList", frasesList);
 		return "learn/add";
@@ -174,7 +175,7 @@ public class LearnController {
 	public String update(@RequestBody FraseDto frase, ModelMap model) {
 		frasesService.update(frase);
 
-		frasesList = frasesService.findByUsuariosDesc(1);
+		frasesList = frasesService.findByUsuariosDesc(us.getId());
 		int total = frasesList.size();
 
 		List<Categorias> cat = categoriasService.findAllByUsuario(us);
@@ -225,6 +226,7 @@ public class LearnController {
 
 	@RequestMapping("/frases_reverse")
 	public String frasesReverse(ModelMap model) {
+		us = usuariosService.getUsuarioLogeado();
 		esReverse = true;
 		List<Frases> frasesPendientes = new ArrayList<>();
 		frasesPendientes = frasesService.finDByIdUsuarioAndEstado(us.getId(), "REVISANDO");
@@ -234,7 +236,7 @@ public class LearnController {
 
 		totalFrasesPendientes = frasesPendientes.size();
 
-		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(1);
+		frasesList = frasesService.findFirsTendByIdUsuarioAndFechaUpdate(us.getId());
 		totalElementosIniciales = frasesList.size();
 
 		if (totalFrasesPendientes > 0) {
@@ -258,7 +260,7 @@ public class LearnController {
 
 	@RequestMapping("/frases_lista")
 	public String frasesList(ModelMap model) {
-
+		us = usuariosService.getUsuarioLogeado();
 		frasesList = frasesService.findByUsuariosDesc(us.getId());
 		int total = frasesList.size();
 
@@ -342,7 +344,7 @@ public class LearnController {
 	@PostMapping("/ajax/buscar")
 	public String buscar(@RequestBody ObjetoComunDto objectoComunDto, ModelMap model) {
 		Boolean hasPersonalizadas = Boolean.valueOf(objectoComunDto.getValor1());
-		frasesList = frasesService.findByIdUsuarioAndFraseDesc(1, objectoComunDto.getValor().toUpperCase());
+		frasesList = frasesService.findByIdUsuarioAndFraseDesc(us.getId(), objectoComunDto.getValor().toUpperCase());
 		int total = frasesList.size();
 
 		List<Integer> categoriaCheckedList = new ArrayList<>();
