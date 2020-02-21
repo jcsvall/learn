@@ -20,6 +20,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author scjuan
@@ -40,6 +42,7 @@ public class Usos implements Serializable {
     @Basic(optional = false)
     @Column(name = "frase_ejemplo")
     private String fraseEjemplo;
+    @JsonIgnore
     @JoinColumn(name = "id_frases", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Frases idFrases;

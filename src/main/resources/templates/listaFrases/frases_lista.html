@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{layouts/default}">
+<head>
+<title>Learn principal page</title>
+</head>
+<body>
+	<div layout:fragment="content">
+
+		<div id="contenido" ng-app="frasesApp"
+			ng-controller="frasesController" ng-init="disable=true">
+			<button type="submit" class="btn btn-primary" ng-click="addPersonalizado()"
+			ng-disabled="disable">Personalizada</button>
+			<div class="list-group">
+				<a href="javascript:void()"
+					class="list-group-item list-group-item-action"
+					ng-repeat="f in frases">
+					<div class="d-flex w-100 justify-content-between">
+						<div class="mb-1">
+
+							<div style="margin-left: 10px">
+								<input type="checkbox" value="{{f.id}}"
+									class="custom-control-input" id="{{f.id}}"
+									ng-model="f.Selected"
+									ng-change="cambio(this)"> <label
+									class="custom-control-label" for="{{f.id}}"
+									style="font-size: 25px;font-weight: bold;">{{f.frase}}</label>
+							</div>
+							<span>{{"("+f.pronunciacion+")"}}</span>
+						</div>
+						<small><span class="badge badge-success">{{f.categoriaDto.categoria}}</span></small>
+					</div>
+					<div class="mb-1">
+						<div ng-repeat="trad in f.traduccionesList">
+							<div>{{trad.traduccion}}</div>
+						</div>
+					</div> <!--small>Donec id elit non mi porta.</small-->
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- js para eventos -->
+	<div layout:fragment="my_js">
+		<script th:src="@{/js/frasesLista/frasesListAngular.js}"></script>
+	</div>
+
+</body>
+</html>
